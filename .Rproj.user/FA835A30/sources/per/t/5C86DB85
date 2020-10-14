@@ -1,0 +1,25 @@
+{
+    "id": "5C86DB85",
+    "path": "~/GitHub/occupancy/R/sim_occ_mod.R",
+    "project_path": "R/sim_occ_mod.R",
+    "type": "r_source",
+    "hash": "2136297998",
+    "contents": "",
+    "dirty": false,
+    "created": 1602636237517.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "tempName": "Untitled1",
+        "cursorPosition": "104,14",
+        "scrollLine": "80"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1602638630,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1602638630407,
+    "read_only": false,
+    "read_only_alternatives": []
+}
