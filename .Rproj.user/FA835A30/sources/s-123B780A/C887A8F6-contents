@@ -4,7 +4,10 @@
 #'  multiple occupancy models, including false positive occupancy models.
 #'
 #'@author
-#'**Maintainer:** Christian Stratton \email{christianstratton@@montana.edu} \cr \cr
+#'**Maintainers:**
+#'   * Christian Stratton (\email{christianstratton@@montana.edu}) \cr
+#'   * Meridith L. Bartley (\email{mlbartley@usgs.gov}) \cr \cr
+#'
 #'Authors:
 #'  * Christian Stratton
 #'  * Meridith Bartley

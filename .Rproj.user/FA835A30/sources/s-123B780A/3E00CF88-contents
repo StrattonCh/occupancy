@@ -1,0 +1,6 @@
+nsims <- 100000
+
+
+for(i in 1:nsims){
+  # 
+}
