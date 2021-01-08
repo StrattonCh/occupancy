@@ -25,7 +25,7 @@
 #'@param rand_visits logical; should each site be visited a random number of
 #'  times? See details.
 #'
-#'@example examples/sim_occ_mod_ex.R
+#'@example examples/sim_occ_ex.R
 #'
 #'@return object of class \code{list} containing the following elements: \cr
 #'  * \code{beta_psi} vector of regression coefficients used to generate psi
@@ -44,7 +44,7 @@
 #'
 #'@md
 
-sim_occ_mod <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
+sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
                         seed = NULL, rand_visits = TRUE){
   # create out vector
   out <- list()
