@@ -156,7 +156,7 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
   data <- data.frame(
     site = rep(1:M, out$n_visits),
     visit = unlist(c(sapply(out$n_visits, function(x) 1:x))),
-    y = na.omit(c(t(out$Y)))
+    y = stats::na.omit(c(t(out$Y)))
   )
 
   # site covariates
@@ -166,7 +166,7 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
   data <- dplyr::left_join(data, tmp, by = "site")
 
   # detection covariates
-  tmp <- as.data.frame(apply(out$p_cov, 3, function(x) na.omit(c(t(x)))))
+  tmp <- as.data.frame(apply(out$p_cov, 3, function(x) stats::na.omit(c(t(x)))))
   tmp$site <- data$site
   tmp$visit <- data$visit
   tmp <- tmp[,-which(names(tmp) == "p_int")]

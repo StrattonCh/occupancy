@@ -33,7 +33,9 @@
 
 occ_mod <- function(occupancy, detection, data, niter = 1000, seed = NULL,
                     save_model = FALSE, model_name = paste0("model_", Sys.Date())){
-  # set seed
+ site <- visit <- y <- '1' <- '.' <- NULL
+
+   # set seed
   if(!is.null(seed)) set.seed(seed)
 
   # convenience
@@ -45,12 +47,12 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, seed = NULL,
   if("y" %notin% names(data)) stop("Data must contain column named 'y'")
 
   # model formulas
-  occupancy_mod <- as.formula(occupancy)
-  detection_mod <- as.formula(detection)
+  occupancy_mod <- stats::as.formula(occupancy)
+  detection_mod <- stats::as.formula(detection)
 
   # model matrices
   ## occupancy
-  occupancy_mod_matrix <- model.matrix(object = occupancy_mod, data = data)
+  occupancy_mod_matrix <- stats::model.matrix(object = occupancy_mod, data = data)
   occupancy_mod_matrix <- cbind(
     occupancy_mod_matrix, matrix(data$site, ncol = 1, dimnames = list(NULL, "site_"))
   ) %>% unique(.)
@@ -58,7 +60,7 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, seed = NULL,
   occupancy_mod_matrix <- occupancy_mod_matrix[,-which(colnames(occupancy_mod_matrix) == "site_")]
 
   ## detection
-  detection_mod_matrix <- model.matrix(object = detection_mod, data = data)
+  detection_mod_matrix <- stats::model.matrix(object = detection_mod, data = data)
 
   # prep data for NIMBLE
   nimble_data <- list()
@@ -137,8 +139,8 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, seed = NULL,
   mod_inits <- function(){
     list(
       z = apply(nimble_data$Y, 1, function(x) ifelse(sum(x, na.rm = T) == 0, 0, 1)),
-      beta = rnorm(ncol(occupancy_mod_matrix), 0, sqrt(2)),
-      alpha = rnorm(ncol(detection_mod_matrix), 0, sqrt(2))
+      beta = stats::rnorm(ncol(occupancy_mod_matrix), 0, sqrt(2)),
+      alpha = stats::rnorm(ncol(detection_mod_matrix), 0, sqrt(2))
     )
   }
 

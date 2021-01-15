@@ -9,7 +9,6 @@ Authors@R: c(
   person("Meridith", "Bartley", email = "mlbartley@USGS.gov", 
   role = c("aut"), comment = c(ORCHID = "0000-0001-5896-2948"))
   )
-Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
@@ -27,8 +26,7 @@ Imports:
     stats,
     magrittr,
     dplyr,
-    magrittr
+    tidyr
 Config/testthat/edition: 3
 Depends: 
     nimble
-
