@@ -25,5 +25,10 @@ Suggests:
 VignetteBuilder: knitr
 Imports: 
     stats,
+    magrittr,
+    dplyr,
     magrittr
 Config/testthat/edition: 3
+Depends: 
+    nimble
+

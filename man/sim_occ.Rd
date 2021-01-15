@@ -2,7 +2,7 @@
 % Please edit documentation in R/sim_occ.R
 \name{sim_occ}
 \alias{sim_occ}
-\title{Simulate data from the single species, single season occupancy model.}
+\title{Simulate data from the single species, single season site occupancy model.}
 \usage{
 sim_occ(
   M = 20,
@@ -43,6 +43,8 @@ single covariate
 \item \code{z} vector of latent occupancy states for each site
 \item \code{Y} matrix of observed Bernoulli responses
 \item \code{n_visits} vector of number of visits to each site
+\item \code{data} a data frame containing all information necessary to fit the
+model
 }
 }
 \description{

@@ -1,4 +1,5 @@
-#' @title Simulate data from the single species, single season occupancy model.
+
+#'@title Simulate data from the single species, single season site occupancy model.
 #'
 #' @description This function simulates data from the single species, single
 #'  season occupancy model first developed by
@@ -38,6 +39,8 @@
 #'  * \code{z} vector of latent occupancy states for each site
 #'  * \code{Y} matrix of observed Bernoulli responses
 #'  * \code{n_visits} vector of number of visits to each site
+#'  * \code{data} a data frame containing all information necessary to fit the
+#'  model
 #'
 #' @importFrom magrittr %>%
 #' @export
@@ -137,6 +140,7 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
 
     out$n_visits <- apply(Y, 1, function(x) length(which(!is.na(x))))
   }
+  if(!rand_visits) out$n_visits <- rep(max_j, M)
 
   # return
   out$beta_psi <- beta_psi
@@ -147,7 +151,29 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
   out$p <- p
   out$z <- z
   out$Y <- Y
-  if (!rand_visits) out$n_visits <- rep(max_j, M)
+
+  # create data compatible with occ_mod
+  data <- data.frame(
+    site = rep(1:M, out$n_visits),
+    visit = unlist(c(sapply(out$n_visits, function(x) 1:x))),
+    y = na.omit(c(t(out$Y)))
+  )
+
+  # site covariates
+  tmp <- out$psi_cov
+  tmp[,1] <- 1:nrow(tmp);colnames(tmp)[1] <- "site"
+  tmp <- as.data.frame(tmp)
+  data <- dplyr::left_join(data, tmp, by = "site")
+
+  # detection covariates
+  tmp <- as.data.frame(apply(out$p_cov, 3, function(x) na.omit(c(t(x)))))
+  tmp$site <- data$site
+  tmp$visit <- data$visit
+  tmp <- tmp[,-which(names(tmp) == "p_int")]
+  data <- dplyr::left_join(data, tmp, by = c("site", "visit"))
+
+  # export
+  out$data <- data
 
   return(out)
 }
