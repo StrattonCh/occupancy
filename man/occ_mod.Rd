@@ -11,7 +11,7 @@ occ_mod(
   niter = 1000,
   seed = NULL,
   save_model = FALSE,
-  model_name = paste0("model_", Sys.Date())
+  model_name = paste0("occ_model_", Sys.Date())
 )
 }
 \arguments{
@@ -47,16 +47,19 @@ et al. (2002)}.
 \details{
 This function fits the single season, single species site occupancy
 model using the logit link function. The \code{data} should contain columns
-named \code{site} and \code{visit}. See examples.
+named \code{site}, \code{visit}, and \code{y}. See examples.
 }
 \examples{
-# simulate data - note structure
+# simulate data - note structure of data
 sim <- sim_occ(M = 250, max_j = 10, seed = 11201995, rand_visits = FALSE)
 data <- sim$data
+names(data)
 
 # fit model
 ex <- occ_mod(occupancy = ~ psi_cov1, detection = ~ p_cov1, data = data,
               niter = 5000)
 colMeans(ex)
 plot(ex[,4], type = "l")
+
+summary(ex)
 }
