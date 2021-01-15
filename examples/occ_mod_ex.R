@@ -4,6 +4,6 @@ data <- sim$data
 
 # fit model
 ex <- occ_mod(occupancy = ~ psi_cov1, detection = ~ p_cov1, data = data,
-              niter = 10000)
+              niter = 5000)
 colMeans(ex)
 plot(ex[,4], type = "l")

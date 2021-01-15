@@ -30,12 +30,11 @@
 #'@export
 #'
 #'@md
+#'
 
 occ_mod <- function(occupancy, detection, data, niter = 1000, seed = NULL,
                     save_model = FALSE, model_name = paste0("model_", Sys.Date())){
- site <- visit <- y <- '1' <- '.' <- NULL
-
-   # set seed
+  # set seed
   if(!is.null(seed)) set.seed(seed)
 
   # convenience
@@ -47,20 +46,26 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, seed = NULL,
   if("y" %notin% names(data)) stop("Data must contain column named 'y'")
 
   # model formulas
-  occupancy_mod <- stats::as.formula(occupancy)
-  detection_mod <- stats::as.formula(detection)
+  occupancy_mod <- as.formula(occupancy)
+  detection_mod <- as.formula(detection)
 
   # model matrices
   ## occupancy
-  occupancy_mod_matrix <- stats::model.matrix(object = occupancy_mod, data = data)
+  occupancy_mod_matrix <- model.matrix(object = occupancy_mod, data = data)
+  occ_num_params <- ncol(occupancy_mod_matrix)
   occupancy_mod_matrix <- cbind(
     occupancy_mod_matrix, matrix(data$site, ncol = 1, dimnames = list(NULL, "site_"))
   ) %>% unique(.)
   if(nrow(occupancy_mod_matrix) != length(unique(data$site))) stop("There are more unique site-level covariate values than there are sites.")
-  occupancy_mod_matrix <- occupancy_mod_matrix[,-which(colnames(occupancy_mod_matrix) == "site_")]
+  if(occ_num_params == 1){
+    occupancy_mod_matrix <- as.matrix(occupancy_mod_matrix[,-which(colnames(occupancy_mod_matrix) == "site_")], ncol = 1)
+    colnames(occupancy_mod_matrix) <- "(Intercept)"
+  } else{
+    occupancy_mod_matrix <- occupancy_mod_matrix[,-which(colnames(occupancy_mod_matrix) == "site_")]
+  }
 
   ## detection
-  detection_mod_matrix <- stats::model.matrix(object = detection_mod, data = data)
+  detection_mod_matrix <- model.matrix(object = detection_mod, data = data)
 
   # prep data for NIMBLE
   nimble_data <- list()
@@ -108,39 +113,60 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, seed = NULL,
   )
 
   ## likelihood
-  likelihood <- paste0(
+  likelihood_a <- paste0(
     "# likelihood \n",
     "# loop through sites \n",
     "for(i in 1:M){ \n",
-    " # calculate psi \n",
-    " logit(psi[i]) <- beta[1] +\n",
-    paste0(sapply(2:ncol(occupancy_mod_matrix), function(x){
-      paste0("  beta[", x, "] * ", colnames(occupancy_mod_matrix)[x], "[i]")
-    }), collapse = " + \n"),
+    " # calculate psi \n")
+  if(ncol(occupancy_mod_matrix) > 1){
+    likelihood_b <- paste0(
+      " logit(psi[i]) <- beta[1] +\n",
+      paste0(sapply(2:ncol(occupancy_mod_matrix), function(x){
+        paste0("  beta[", x, "] * ", colnames(occupancy_mod_matrix)[x], "[i]")
+      }), collapse = " + \n")
+    )
+  } else{
+    likelihood_b <- paste0(
+      " logit(psi[i]) <- beta[1]"
+    )
+  }
+  likelihood_c <- paste0(
     "\n\n",
     " # latent occupancy state \n",
     " z[i] ~ dbern(psi[i]) \n\n",
     " # loop through visits \n",
     " for(j in 1:nvisits[i]){\n",
-    "  # calculate p\n",
-    "  logit(p[i,j]) <- alpha[1] +\n",
-    paste0(sapply(2:ncol(detection_mod_matrix), function(x){
-      paste0("   alpha[", x, "] * ", colnames(detection_mod_matrix)[x], "[i,j]")
-    }), collapse = " + \n"),
+    "  # calculate p\n"
+  )
+  if(ncol(detection_mod_matrix) > 1){
+    likelihood_d <- paste0(
+      "  logit(p[i,j]) <- alpha[1] +\n",
+      paste0(sapply(2:ncol(detection_mod_matrix), function(x){
+        paste0("   alpha[", x, "] * ", colnames(detection_mod_matrix)[x], "[i,j]")
+      }), collapse = " + \n")
+    )
+  } else{
+    likelihood_d <- paste0(
+      "  logit(p[i,j]) <- alpha[1]"
+    )
+  }
+  likelihood_e <- paste0(
     "\n\n",
     "  # response model\n",
     "  Y[i,j] ~ dbern(z[i] * p[i,j])",
     "\n }",
     "\n}"
   )
+  likelihood <- paste0(likelihood_a, likelihood_b, likelihood_c, likelihood_d, likelihood_e)
+
   code <- paste0(priors, "\n", likelihood)
 
   # initialization
   mod_inits <- function(){
     list(
       z = apply(nimble_data$Y, 1, function(x) ifelse(sum(x, na.rm = T) == 0, 0, 1)),
-      beta = stats::rnorm(ncol(occupancy_mod_matrix), 0, sqrt(2)),
-      alpha = stats::rnorm(ncol(detection_mod_matrix), 0, sqrt(2))
+      beta = rnorm(ncol(occupancy_mod_matrix), 0, sqrt(2)),
+      alpha = rnorm(ncol(detection_mod_matrix), 0, sqrt(2))
     )
   }
 
