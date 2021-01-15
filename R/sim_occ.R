@@ -1,7 +1,6 @@
-
 #'@title Simulate data from the single species, single season site occupancy model.
 #'
-#' @description This function simulates data from the single species, single
+#'@description This function simulates data from the single species, single
 #'  season occupancy model first developed by
 #'  \href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2}{MacKenzie
 #'   et al. (2002)}.
@@ -15,20 +14,20 @@
 #'  \code{beta_p} can be set to intercepts that generate the desired derived
 #'  probabilities.
 #'
-#' @param M number of sites
-#' @param max_j maximum number of visits to each site. If \code{rand_visits =
+#'@param M number of sites
+#'@param max_j maximum number of visits to each site. If \code{rand_visits =
 #'  FALSE}, this value is the number of visits to each site. If
 #'  \code{rand_visits = TRUE}, each site is visited a random
 #'  (\code{sample(2:max_j, size = 1)}) number of times.
-#' @param beta_psi vector of regression coefficients used to generate psi
-#' @param beta_p vector of regression coefficients used to generate p
-#' @param seed optional seed for reproducibility
-#' @param rand_visits logical; should each site be visited a random number of
+#'@param beta_psi vector of regression coefficients used to generate psi
+#'@param beta_p vector of regression coefficients used to generate p
+#'@param seed optional seed for reproducibility
+#'@param rand_visits logical; should each site be visited a random number of
 #'  times? See details.
 #'
-#' @example examples/sim_occ_ex.R
+#'@example examples/sim_occ_ex.R
 #'
-#' @return object of class \code{list} containing the following elements: \cr
+#'@return object of class \code{list} containing the following elements: \cr
 #'  * \code{beta_psi} vector of regression coefficients used to generate psi
 #'  * \code{beta_p} vector of regression coefficients used to generate p
 #'  * \code{psi_cov} matrix of site level covariates
@@ -42,10 +41,10 @@
 #'  * \code{data} a data frame containing all information necessary to fit the
 #'  model
 #'
-#' @importFrom magrittr %>%
-#' @export
+#'@importFrom magrittr %>%
+#'@export
 #'
-#' @md
+#'@md
 
 sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
                     seed = NULL, rand_visits = TRUE) {
@@ -68,13 +67,16 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
 
   # generate covariates
   ## psi
-  psi_cov <- cbind(
-    rep(1, M),
-    matrix(
-      stats::runif((p_beta_psi - 1) * M, 0, 1.5),
-      ncol = p_beta_psi - 1
+  if(p_beta_psi == 1){
+    psi_cov <- matrix(rep(1, M), ncol = 1)
+  } else{
+    psi_cov <- cbind(
+      rep(1, M),
+      matrix(
+        stats::runif((p_beta_psi-1) * M, 0, 1.5), ncol = p_beta_psi-1
+      )
     )
-  )
+  }
 
   # column names
   if (p_beta_psi == 1) {
@@ -156,7 +158,7 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
   data <- data.frame(
     site = rep(1:M, out$n_visits),
     visit = unlist(c(sapply(out$n_visits, function(x) 1:x))),
-    y = stats::na.omit(c(t(out$Y)))
+    y = na.omit(c(t(out$Y)))
   )
 
   # site covariates
@@ -166,7 +168,7 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
   data <- dplyr::left_join(data, tmp, by = "site")
 
   # detection covariates
-  tmp <- as.data.frame(apply(out$p_cov, 3, function(x) stats::na.omit(c(t(x)))))
+  tmp <- as.data.frame(apply(out$p_cov, 3, function(x) na.omit(c(t(x)))))
   tmp$site <- data$site
   tmp$visit <- data$visit
   tmp <- tmp[,-which(names(tmp) == "p_int")]
