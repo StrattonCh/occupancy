@@ -1,0 +1,9 @@
+# simulate data - note structure
+sim <- sim_occ(M = 250, max_j = 10, seed = 11201995, rand_visits = FALSE)
+data <- sim$data
+
+# fit model
+ex <- occ_mod(occupancy = ~ psi_cov1, detection = ~ p_cov1, data = data,
+              niter = 10000)
+colMeans(ex)
+plot(ex[,4], type = "l")
