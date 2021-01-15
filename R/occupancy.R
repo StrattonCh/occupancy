@@ -21,5 +21,10 @@
 #'  et al. (2015) false positive occupancy model review paper}
 #'
 #'@name occupancy
+#'
+#'@importFrom magrittr %>%
+#'@importFrom nimble getNodeFunctionIndexedInfo
+#'@importFrom nimble nimSwitch
+#'
 #'@md
 NULL
