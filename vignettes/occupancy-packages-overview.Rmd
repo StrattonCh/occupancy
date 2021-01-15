@@ -1,0 +1,45 @@
+---
+title: "occupancy-packages-overview"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{occupancy-packages-overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(occupancy)
+```
+
+
+# R Package: unmarked
+
+Cran: https://cran.r-project.org/web/packages/unmarked/unmarked.pdf
+GitHub: https://github.com/rbchan/unmarked
+Paper: https://www.jstatsoft.org/article/view/v043i10
+
+Unmarked is an R package for analyzing ecological data arising from several popular sampling techniques. The sampling methods include point counts, occurrence sampling, distance sampling, removal, double observer, and many others. Unmarked uses hierarchical models to incorporate covariates of the latent abundance (or occupancy) and imperfect detection processes. General treatment of these models can be found in MacKenzie et al. (2006) and Royle and Dorazio (2008). The primary reference for the package is Fiske and
+Chandler (2011).
+
+_Inference is based on the integrated likelihood wherein the latent state variable is marginalized out of the conditional likelihood._
+
+Models Fit by this Package:
+
+1. Occupancy from (non)detection data
+2. Multi-season occupancy
+3. False positive occupancy
+4. Multi-species occupancy
+5. Abundance from (non)detection data 
+6. Abundance from repeated counts
+7. Abundance from distance sampling
+8. Abundance from multinomial counts
+9. Multi-season abundance 
+
+From paper: "Markov chain Monte Carlo methods could be implemented for all of these models allowing for Bayesian inference. An important advantage of Bayesian analysis over classical methods is that the latent abundance or occurrence variables can be treated as formal parameters. Thus posterior distributions could easily be calculated for derived parameters such as the proportion of sites occupied. Bayesian analysis also would provide a natural frame-work for incorporating additional sources of random variation. For example, one could model heterogeneity among sites not accounted for by covariates alone."

@@ -68,7 +68,7 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
   psi_cov <- cbind(
     rep(1, M),
     matrix(
-      runif((p_beta_psi-1) * M, 0, 1.5), ncol = p_beta_psi-1
+      stats::runif((p_beta_psi-1) * M, 0, 1.5), ncol = p_beta_psi-1
     )
   )
 
@@ -89,7 +89,7 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
     if(k == 1){
       p_cov[,,k] <- 1
     } else{
-      p_cov[,,k] <- runif(n = M * max_j, 0, 1.5)
+      p_cov[,,k] <- stats::runif(n = M * max_j, 0, 1.5)
     }
 
     p_linpred <- p_linpred + beta_p[k,] * p_cov[,,k]
@@ -106,13 +106,13 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
   p <- inv.logit(p_linpred)
 
   # generate latent occupancy
-  z <- apply(psi, 1, function(x) rbinom(1, 1, x))
+  z <- apply(psi, 1, function(x) stats::rbinom(1, 1, x))
 
   # generate responses
   Y <- matrix(0, M, max_j)
   for(i in 1:M){
     for(j in 1:max_j){
-      Y[i, j] <- z[i] * rbinom(1, 1, prob = p[i,j])
+      Y[i, j] <- z[i] * stats::rbinom(1, 1, prob = p[i,j])
     }
   }
 
