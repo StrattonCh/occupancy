@@ -17,7 +17,7 @@ et al. (2015) false positive occupancy model review paper}
 }
 }
 \author{
-\strong{Maintainers:}
+** Maintainers:**
 \itemize{
 \item Christian Stratton (\email{christianstratton@montana.edu}) \cr
 \item Meridith L. Bartley (\email{mlbartley@usgs.gov}) \cr \cr
