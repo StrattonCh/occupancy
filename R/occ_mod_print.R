@@ -1,4 +1,4 @@
-#' Print method for "occ_mod" class
+#' Print method for \code{occ_mod} class
 #'
 #' @param x An object of class \link{occ_mod}
 #' @param ... Other arguments passed to or from other methods
