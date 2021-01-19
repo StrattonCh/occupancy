@@ -9,6 +9,7 @@ occ_mod(
   detection,
   data,
   niter = 1000,
+  nchains = 3,
   seed = NULL,
   save_model = FALSE,
   model_name = paste0("occ_model_", Sys.Date())
@@ -36,7 +37,13 @@ exported?}
 describing the model if \code{save_model = TRUE}}
 }
 \value{
-an object of class \code{matrix} containing posterior samples
+an object of class \code{list} containing the following:\cr
+\itemize{
+\item \code{samples} object of class \code{list} of length \code{nchains}, each
+containing a \code{matrix} posterior samples
+\item \code{loglik} object of class \code{list} of length code{nchains}, each
+containing a \code{matrix} of samples of the log posterior likelihood
+}
 }
 \description{
 This function fits the single species, single
@@ -50,16 +57,26 @@ model using the logit link function. The \code{data} should contain columns
 named \code{site}, \code{visit}, and \code{y}. See examples.
 }
 \examples{
-# simulate data - note structure of data
-sim <- sim_occ(M = 250, max_j = 10, seed = 11201995, rand_visits = FALSE)
+# simulate data
+sim <- sim_occ(M = 250, max_j = 10, seed = 01012021, rand_visits = FALSE)
 data <- sim$data
+
+# note structure of data frame
 names(data)
+head(data)
 
 # fit model
 ex <- occ_mod(occupancy = ~ psi_cov1, detection = ~ p_cov1, data = data,
-              niter = 5000)
-colMeans(ex)
-plot(ex[,4], type = "l")
+              niter = 2000)
 
-summary(ex)
+# results
+str(ex)
+
+
+
+# lppd <- sum(log(colMeans(exp(loglik))))
+# pwaic1 <- 2 * sum(log(colMeans(exp(loglik))) - colMeans(loglik))
+# pwaic2 <- sum(apply(loglik, 2, var))
+# waic1 <- -2 * (lppd - pwaic1)
+# waic2 <- -2 * (lppd - pwaic2)
 }
