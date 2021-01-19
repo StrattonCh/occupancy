@@ -205,7 +205,7 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, nchains = 3, seed 
   model_c <- nimble::compileNimble(model)
 
   message("\nBuilding R MCMC object")
-  mcmc <- nimble::buildMCMC(model_c, monitors = c("z", "beta_psi", "beta_p"))
+  mcmcinfo <- capture.output(mcmc <- nimble::buildMCMC(model_c, monitors = c("z", "beta_psi", "beta_p")))
 
   message("\nCompiling R MCMC object to C")
   mcmc_c <- nimble::compileNimble(mcmc)
@@ -246,7 +246,11 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, nchains = 3, seed 
 
   # return
   out <- list(samples = samples, loglik = loglik)
+
+  # attributes
   class(out) <- c("occ_mod", "list")
+  attr(out, "code") <- code
+  attr(out, "mcmcinfo") <- mcmcinfo
   return(out)
 }
 

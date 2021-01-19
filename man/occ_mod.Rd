@@ -71,6 +71,7 @@ ex <- occ_mod(occupancy = ~ psi_cov1, detection = ~ p_cov1, data = data,
 
 # results
 str(ex)
+ex
 
 
 
