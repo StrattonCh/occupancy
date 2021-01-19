@@ -22,6 +22,7 @@
 #'  exported?
 #'@param model_name character string defining the name of the text file
 #'  describing the model if \code{save_model = TRUE}
+#' @param nchains number of MCMC chains
 #'
 #'@example examples/occ_mod_ex.R
 #'
