@@ -143,9 +143,10 @@ et al. (2002)</a>.</p>
   <span class='va'>detection</span>,
   <span class='va'>data</span>,
   niter <span class='op'>=</span> <span class='fl'>1000</span>,
+  nchains <span class='op'>=</span> <span class='fl'>3</span>,
   seed <span class='op'>=</span> <span class='cn'>NULL</span>,
   save_model <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  model_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"model_"</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+  model_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"occ_model_"</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -189,31 +190,47 @@ describing the model if <code>save_model = TRUE</code></p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of class <code>matrix</code> containing posterior samples</p>
+    <p>an object of class <code>list</code> containing the following:<br /></p><ul>
+<li><p><code>samples</code> object of class <code>list</code> of length <code>nchains</code>, each
+containing a <code>matrix</code> posterior samples</p></li>
+<li><p><code>loglik</code> object of class <code>list</code> of length codenchains, each
+containing a <code>matrix</code> of samples of the log posterior likelihood</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function fits the single season, single species site occupancy
 model using the logit link function. The <code>data</code> should contain columns
-named <code>site</code> and <code>visit</code>. See examples.</p>
+named <code>site</code>, <code>visit</code>, and <code>y</code>. See examples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># simulate data - note structure</span>
-<span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sim_occ.html'>sim_occ</a></span><span class='op'>(</span>M <span class='op'>=</span> <span class='fl'>250</span>, max_j <span class='op'>=</span> <span class='fl'>10</span>, seed <span class='op'>=</span> <span class='fl'>11201995</span>, rand_visits <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># simulate data</span>
+<span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sim_occ.html'>sim_occ</a></span><span class='op'>(</span>M <span class='op'>=</span> <span class='fl'>250</span>, max_j <span class='op'>=</span> <span class='fl'>10</span>, seed <span class='op'>=</span> <span class='fl'>01012021</span>, rand_visits <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>sim</span><span class='op'>$</span><span class='va'>data</span>
 
+<span class='co'># note structure of data frame</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "site"     "visit"    "y"        "psi_cov1" "p_cov1"  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   site visit y   psi_cov1    p_cov1
+#&gt; 1    1     1 1 0.07477433 1.0225061
+#&gt; 2    1     2 0 0.07477433 1.0858551
+#&gt; 3    1     3 0 0.07477433 0.3505194
+#&gt; 4    1     4 0 0.07477433 0.3793353
+#&gt; 5    1     5 0 0.07477433 0.6347882
+#&gt; 6    1     6 1 0.07477433 1.3194706</div><div class='input'>
 <span class='co'># fit model</span>
 <span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>occ_mod</span><span class='op'>(</span>occupancy <span class='op'>=</span> <span class='op'>~</span> <span class='va'>psi_cov1</span>, detection <span class='op'>=</span> <span class='op'>~</span> <span class='va'>p_cov1</span>, data <span class='op'>=</span> <span class='va'>data</span>,
-              niter <span class='op'>=</span> <span class='fl'>10000</span><span class='op'>)</span>
+              niter <span class='op'>=</span> <span class='fl'>2000</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Writing NIMBLE model to current working directory:</span></div><div class='output co'>#&gt; # priors
-#&gt; for(i in 1:2){beta[i] ~ dnorm(0, 1/2)}
-#&gt; for(i in 1:2){alpha[i] ~ dnorm(0, 1/2)}
+#&gt; for(i in 1:2){beta_psi[i] ~ dnorm(0, 1/2)}
+#&gt; for(i in 1:2){beta_p[i] ~ dnorm(0, 1/2)}
 #&gt; 
 #&gt; # likelihood 
 #&gt; # loop through sites 
 #&gt; for(i in 1:M){ 
 #&gt;  # calculate psi 
-#&gt;  logit(psi[i]) &lt;- beta[1] +
-#&gt;   beta[2] * psi_cov1[i]
+#&gt;  logit(psi[i]) &lt;- beta_psi[1] +
+#&gt;   beta_psi[2] * psi_cov1[i]
 #&gt; 
 #&gt;  # latent occupancy state 
 #&gt;  z[i] ~ dbern(psi[i]) 
@@ -221,8 +238,8 @@ named <code>site</code> and <code>visit</code>. See examples.</p>
 #&gt;  # loop through visits 
 #&gt;  for(j in 1:nvisits[i]){
 #&gt;   # calculate p
-#&gt;   logit(p[i,j]) &lt;- alpha[1] +
-#&gt;    alpha[2] * p_cov1[i,j]
+#&gt;   logit(p[i,j]) &lt;- beta_p[1] +
+#&gt;    beta_p[2] * p_cov1[i,j]
 #&gt; 
 #&gt;   # response model
 #&gt;   Y[i,j] ~ dbern(z[i] * p[i,j])
@@ -230,20 +247,90 @@ named <code>site</code> and <code>visit</code>. See examples.</p>
 #&gt; }</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Building R model</span></div><div class='output co'>#&gt; <span class='message'>defining model...</span></div><div class='output co'>#&gt; Detected Y as data within 'constants'.</div><div class='output co'>#&gt; <span class='message'>Adding Y as data for building model.</span></div><div class='output co'>#&gt; <span class='message'>building model...</span></div><div class='output co'>#&gt; <span class='message'>setting data and initial values...</span></div><div class='output co'>#&gt; <span class='message'>running calculate on model (any error reports that follow may simply reflect missing values in model variables) ... </span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>checking model sizes and dimensions...</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>model building finished.</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Compiling R model to C</span></div><div class='output co'>#&gt; <span class='message'>compiling... this may take a minute. Use 'showCompilerOutput = TRUE' to see C++ compilation details.</span></div><div class='output co'>#&gt; <span class='message'>compilation finished.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Building R MCMC object</span></div><div class='output co'>#&gt; ===== Monitors =====
-#&gt; thin = 1: beta, alpha
-#&gt; ===== Samplers =====
-#&gt; RW sampler (4)
-#&gt;   - beta[]  (2 elements)
-#&gt;   - alpha[]  (2 elements)
-#&gt; binary sampler (250)
-#&gt;   - z[]  (250 elements)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Building R MCMC object</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Compiling R MCMC object to C</span></div><div class='output co'>#&gt; <span class='message'>compiling... this may take a minute. Use 'showCompilerOutput = TRUE' to see C++ compilation details.</span></div><div class='output co'>#&gt; <span class='message'>compilation finished.</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Running MCMC</span></div><div class='output co'>#&gt; <span class='message'>running chain 1...</span></div><div class='output co'>#&gt; |-------------|-------------|-------------|-------------|
-#&gt; |-------------------------------------------------------|</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   alpha[1]   alpha[2]    beta[1]    beta[2] 
-#&gt; -0.1781041  1.1735769  0.1522852  0.7937611 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>[</span>,<span class='fl'>4</span><span class='op'>]</span>, type <span class='op'>=</span> <span class='st'>"l"</span><span class='op'>)</span>
-</div><div class='img'><img src='occ_mod-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; |-------------------------------------------------------|</div><div class='output co'>#&gt; <span class='message'>running chain 2...</span></div><div class='output co'>#&gt; |-------------|-------------|-------------|-------------|
+#&gt; |-------------------------------------------------------|</div><div class='output co'>#&gt; <span class='message'>running chain 3...</span></div><div class='output co'>#&gt; |-------------|-------------|-------------|-------------|
+#&gt; |-------------------------------------------------------|</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Computing posterior likelihood</span></div><div class='input'>
+<span class='co'># results</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
+#&gt;  $ samples:List of 3
+#&gt;   ..$ chain1: num [1:2000, 1:254] 0.621 0.621 0.99 0.99 0.99 ...
+#&gt;   .. ..- attr(*, "dimnames")=List of 2
+#&gt;   .. .. ..$ : NULL
+#&gt;   .. .. ..$ : chr [1:254] "beta_p[1]" "beta_p[2]" "beta_psi[1]" "beta_psi[2]" ...
+#&gt;   ..$ chain2: num [1:2000, 1:254] -1.1022 -0.8708 -0.0517 -0.0517 -0.5245 ...
+#&gt;   .. ..- attr(*, "dimnames")=List of 2
+#&gt;   .. .. ..$ : NULL
+#&gt;   .. .. ..$ : chr [1:254] "beta_p[1]" "beta_p[2]" "beta_psi[1]" "beta_psi[2]" ...
+#&gt;   ..$ chain3: num [1:2000, 1:254] 1.18 1.18 1.18 1.18 1.18 ...
+#&gt;   .. ..- attr(*, "dimnames")=List of 2
+#&gt;   .. .. ..$ : NULL
+#&gt;   .. .. ..$ : chr [1:254] "beta_p[1]" "beta_p[2]" "beta_psi[1]" "beta_psi[2]" ...
+#&gt;  $ loglik :List of 3
+#&gt;   ..$ chain1: num [1:2000, 1:250] -9.25 -9.25 -8.72 -8.16 -8.12 ...
+#&gt;   .. ..- attr(*, "dimnames")=List of 2
+#&gt;   .. .. ..$ : NULL
+#&gt;   .. .. ..$ : chr [1:250] "site1" "site2" "site3" "site4" ...
+#&gt;   ..$ chain2: num [1:2000, 1:250] -7.6 -6.38 -7.47 -7.47 -6.55 ...
+#&gt;   .. ..- attr(*, "dimnames")=List of 2
+#&gt;   .. .. ..$ : NULL
+#&gt;   .. .. ..$ : chr [1:250] "site1" "site2" "site3" "site4" ...
+#&gt;   ..$ chain3: num [1:2000, 1:250] -8.5 -8.5 -8.7 -8.74 -8.74 ...
+#&gt;   .. ..- attr(*, "dimnames")=List of 2
+#&gt;   .. .. ..$ : NULL
+#&gt;   .. .. ..$ : chr [1:250] "site1" "site2" "site3" "site4" ...
+#&gt;  - attr(*, "class")= chr [1:2] "occ_mod" "list"
+#&gt;  - attr(*, "code")= chr "# priors\nfor(i in 1:2){beta_psi[i] ~ dnorm(0, 1/2)}\nfor(i in 1:2){beta_p[i] ~ dnorm(0, 1/2)}\n\n# likelihood "| __truncated__
+#&gt;  - attr(*, "mcmcinfo")= chr [1:8] "===== Monitors =====" "thin = 1: z, beta_psi, beta_p" "===== Samplers =====" "RW sampler (4)" ...</div><div class='input'><span class='va'>ex</span>
+</div><div class='output co'>#&gt; Single species, single season site occupancy model fit using NIMBLE.
+#&gt; 
+#&gt; The following model was fit:
+#&gt; # priors
+#&gt; for(i in 1:2){beta_psi[i] ~ dnorm(0, 1/2)}
+#&gt; for(i in 1:2){beta_p[i] ~ dnorm(0, 1/2)}
+#&gt; 
+#&gt; # likelihood 
+#&gt; # loop through sites 
+#&gt; for(i in 1:M){ 
+#&gt;  # calculate psi 
+#&gt;  logit(psi[i]) &lt;- beta_psi[1] +
+#&gt;   beta_psi[2] * psi_cov1[i]
+#&gt; 
+#&gt;  # latent occupancy state 
+#&gt;  z[i] ~ dbern(psi[i]) 
+#&gt; 
+#&gt;  # loop through visits 
+#&gt;  for(j in 1:nvisits[i]){
+#&gt;   # calculate p
+#&gt;   logit(p[i,j]) &lt;- beta_p[1] +
+#&gt;    beta_p[2] * p_cov1[i,j]
+#&gt; 
+#&gt;   # response model
+#&gt;   Y[i,j] ~ dbern(z[i] * p[i,j])
+#&gt;  }
+#&gt; }
+#&gt; 
+#&gt; The following MCMC algorithm was used:
+#&gt; ===== Monitors =====
+#&gt;  thin = 1: z, beta_psi, beta_p
+#&gt;  ===== Samplers =====
+#&gt;  RW sampler (4)
+#&gt;    - beta_psi[]  (2 elements)
+#&gt;    - beta_p[]  (2 elements)
+#&gt;  binary sampler (250)
+#&gt;    - z[]  (250 elements)</div><div class='input'>
+
+
+<span class='co'># lppd &lt;- sum(log(colMeans(exp(loglik))))</span>
+<span class='co'># pwaic1 &lt;- 2 * sum(log(colMeans(exp(loglik))) - colMeans(loglik))</span>
+<span class='co'># pwaic2 &lt;- sum(apply(loglik, 2, var))</span>
+<span class='co'># waic1 &lt;- -2 * (lppd - pwaic1)</span>
+<span class='co'># waic2 &lt;- -2 * (lppd - pwaic2)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

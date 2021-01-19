@@ -4,7 +4,7 @@ Title: Fit and Analyze Occupancy Models
 Version: 0.1.0
 Authors@R: c(
   person("Christian", "Stratton", email = "3strattonc@gmail.com", 
-  role = c("aut", "cre")
+  role = c("aut", "cre"), comment = c(ORCHID = "0000-0001-8051-2185")
   ), 
   person("Meridith", "Bartley", email = "mlbartley@USGS.gov", 
   role = c("aut"), comment = c(ORCHID = "0000-0001-5896-2948"))
