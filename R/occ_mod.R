@@ -25,14 +25,17 @@
 #'
 #'@example examples/occ_mod_ex.R
 #'
-#'@return an object of class \code{matrix} containing posterior samples
+#'@return an object of class \code{list} containing the following:\cr
+#'  * \code{samples} object of class \code{list} of length \code{nchains}, each
+#'  containing a \code{matrix} posterior samples
+#'  * \code{loglik} object of class \code{list} of length code{nchains}, each
+#'  containing a \code{matrix} of samples of the log posterior likelihood
 #'
 #'@export
 #'
 #'@md
-#'
 
-occ_mod <- function(occupancy, detection, data, niter = 1000, seed = NULL,
+occ_mod <- function(occupancy, detection, data, niter = 1000, nchains = 3, seed = NULL,
                     save_model = FALSE, model_name = paste0("occ_model_", Sys.Date())){
   # fix unbound variables issues
   site <- visit <- y <- `1` <- `.` <- NULL
@@ -165,7 +168,8 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, seed = NULL,
   code <- paste0(priors, "\n", likelihood)
 
   # initialization
-  mod_inits <- function(){
+  mod_inits <- function(x){
+    tmp <- x
     list(
       z = apply(nimble_data$Y, 1, function(x) ifelse(sum(x, na.rm = T) == 0, 0, 1)),
       beta_psi = stats::rnorm(ncol(occupancy_mod_matrix), 0, sqrt(2)),
@@ -192,23 +196,57 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, seed = NULL,
   model <- nimble::readBUGSmodel(
     model = paste0(model_name, ".txt"),
     data = data_,
-    inits = mod_inits()
+    inits = mod_inits(1)
   )
   if(!save_model) file.remove(paste0(model_name, ".txt"))
 
+  # fit model
   message("\nCompiling R model to C")
   model_c <- nimble::compileNimble(model)
 
   message("\nBuilding R MCMC object")
-  mcmc <- nimble::buildMCMC(model_c)
+  mcmc <- nimble::buildMCMC(model_c, monitors = c("z", "beta_psi", "beta_p"))
 
   message("\nCompiling R MCMC object to C")
   mcmc_c <- nimble::compileNimble(mcmc)
 
   message("\nRunning MCMC")
-  samples <- nimble::runMCMC(mcmc_c, niter = niter)
+  inits <- lapply(1:nchains, function(x) mod_inits(x))
+  samples <- nimble::runMCMC(mcmc_c, niter = niter, inits = inits, nchains = nchains)
 
-  out <- samples
+  # compute posterior likelihood
+  message("\nComputing posterior likelihood")
+  loglik <- list()
+  for(i in 1:nchains){
+    samples_ <- samples[[i]]
+    beta_psi <- samples_[,which(colnames(samples_) %in% paste0('beta_psi[', 1:ncol(occupancy_mod_matrix), ']'))]
+    beta_p <- samples_[,which(colnames(samples_) %in% paste0('beta_p[', 1:ncol(detection_mod_matrix), ']'))]
+    z <- samples_[,which(colnames(samples_) %in% paste0('z[', 1:nrow(data_[["Y"]]), ']'))]
+
+    z_ <- z[,rep(1:ncol(z),data_[["nvisits"]])]
+    y_ <- matrix(rep(data[,"y"],  nrow(samples_)), nrow = nrow(samples_), byrow = TRUE)
+
+    psi_tmp <- exp(beta_psi %*% t(occupancy_mod_matrix))
+    psi <- psi_tmp / (1 + psi_tmp)
+    p_tmp <- exp(beta_p %*% t(detection_mod_matrix))
+    p <- p_tmp / (1 + p_tmp)
+
+    # log pointwise predictive density
+    site <- psi^z * (1-psi)^(1-z)
+
+    visit <- (z_*p)^y_ * (1-z_*p)^(1-y_)
+    ndx_upr <- cumsum(data_[["nvisits"]])
+    ndx_lwr <- ndx_upr - data_[["nvisits"]] + 1
+    tmp <- sapply(1:ncol(site), function(x){ apply(visit[,ndx_lwr[x]:ndx_upr[x]], 1, prod)})
+
+    loglik[[i]] <- log(site * tmp)
+    colnames(loglik[[i]]) <- paste0("site", 1:nrow(data_[["Y"]]))
+  }
+  names(loglik) <- paste0("chain", 1:nchains)
+
+  # return
+  out <- list(samples = samples, loglik = loglik)
+  class(out) <- c("occ_mod", "list")
   return(out)
 }
 
