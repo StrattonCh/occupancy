@@ -2,7 +2,7 @@
 % Please edit documentation in R/occ_mod_print.R
 \name{print.occ_mod}
 \alias{print.occ_mod}
-\title{Print method for "occ_mod" class}
+\title{Print method for \code{occ_mod} class}
 \usage{
 \method{print}{occ_mod}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{Other arguments passed to or from other methods}
 }
 \description{
-Print method for "occ_mod" class
+Print method for \code{occ_mod} class
 }
