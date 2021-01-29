@@ -10,6 +10,7 @@ This software is provided "AS IS."
 
 <!-- badges: start -->
 [![R build status](https://github.com/StrattonCh/occupancy/workflows/R-CMD-check/badge.svg)](https://github.com/StrattonCh/occupancy/actions)
+![pkgdown](https://github.com/StrattonCh/occupancy/workflows/pkgdown/badge.svg)
 <!-- badges: end -->
 
 ## Installation
