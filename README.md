@@ -5,9 +5,13 @@ Fit and analyze occupancy models in R
 [![R build status](https://github.com/StrattonCh/occupancy/workflows/R-CMD-check/badge.svg)](https://github.com/StrattonCh/occupancy/actions)
 <!-- badges: end -->
 
-## Introduction
-
 ## Installation
+
+ ```{r, eval = FALSE}
+
+# Install development version from GitHub
+devtools::install_github("StrattonCh/occupancy")
+```
 
 ## Function Overview
 
