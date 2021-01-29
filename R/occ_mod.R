@@ -256,6 +256,15 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, nchains = 3, seed 
 }
 
 
+print.occ_mod <- function(x, ...) {
+  cat("Single species, single season site occupancy model fit using NIMBLE.\n")
+  cat("\nThe following model was fit:\n")
+  cat(attr(x, "code"))
+  cat("\n\nThe following MCMC algorithm was used:\n")
+  cat(paste0(attr(x, "mcmcinfo"), sep = "\n"))
+}
+
+
 
 
 
