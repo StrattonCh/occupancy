@@ -126,7 +126,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Fit the single species, single season site occupancy model.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/StrattonCh/occupancy/blob/master/R/occ_mod.R'><code>R/occ_mod.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/StrattonCh/occupancy/blob/master/R/occ_functions.R'><code>R/occ_functions.R</code></a></small>
     <div class="hidden name"><code>occ_mod.Rd</code></div>
     </div>
 
@@ -223,10 +223,10 @@ named <code>site</code>, <code>visit</code>, and <code>y</code>. See examples.</
 #&gt; 6    1     6 0 0.07477433 1.47234856</div><div class='input'>
 <span class='co'># fit model</span>
 <span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>occ_mod</span><span class='op'>(</span>occupancy <span class='op'>=</span> <span class='op'>~</span> <span class='va'>psi_cov1</span>, detection <span class='op'>=</span> <span class='op'>~</span> <span class='va'>p_cov1</span>, data <span class='op'>=</span> <span class='va'>data</span>,
-              niter <span class='op'>=</span> <span class='fl'>4000</span><span class='op'>)</span>
+              niter <span class='op'>=</span> <span class='fl'>4000</span>, beta_prior <span class='op'>=</span> <span class='st'>"dunif(-5, -2)"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; # priors
-#&gt; for(i in 1:2){beta_psi[i] ~ dnorm(0, 1/2)}
-#&gt; for(i in 1:2){beta_p[i] ~ dnorm(0, 1/2)}
+#&gt; for(i in 1:2){beta_psi[i] ~ dunif(-5, -2)}
+#&gt; for(i in 1:2){beta_p[i] ~ dunif(-5, -2)}
 #&gt; 
 #&gt; # likelihood 
 #&gt; # loop through sites 
@@ -252,9 +252,21 @@ named <code>site</code>, <code>visit</code>, and <code>y</code>. See examples.</
 #&gt; <span class='message'>Compiling R model to C</span></div><div class='output co'>#&gt; <span class='message'>compiling... this may take a minute. Use 'showCompilerOutput = TRUE' to see C++ compilation details.</span></div><div class='output co'>#&gt; <span class='message'>compilation finished.</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Building R MCMC object</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Compiling R MCMC object to C</span></div><div class='output co'>#&gt; <span class='message'>compiling... this may take a minute. Use 'showCompilerOutput = TRUE' to see C++ compilation details.</span></div><div class='output co'>#&gt; <span class='message'>compilation finished.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Running MCMC</span></div><div class='output co'>#&gt; <span class='message'>running chain 1...</span></div><div class='output co'>#&gt; |-------------|-------------|-------------|-------------|
-#&gt; |-------------------------------------------------------|</div><div class='output co'>#&gt; <span class='message'>running chain 2...</span></div><div class='output co'>#&gt; |-------------|-------------|-------------|-------------|
-#&gt; |-------------------------------------------------------|</div><div class='output co'>#&gt; <span class='message'>running chain 3...</span></div><div class='output co'>#&gt; |-------------|-------------|-------------|-------------|
+#&gt; <span class='message'>Running MCMC</span></div><div class='output co'>#&gt; <span class='message'>running chain 1...</span></div><div class='output co'>#&gt; warning: problem initializing stochastic node beta_psi[1]: logProb is -Inf.
+#&gt; warning: problem initializing stochastic node beta_psi[2]: logProb is -Inf.
+#&gt; warning: problem initializing stochastic node beta_p[1]: logProb is -Inf.
+#&gt; warning: problem initializing stochastic node beta_p[2]: logProb is -Inf.
+#&gt; |-------------|-------------|-------------|-------------|
+#&gt; |-------------------------------------------------------|</div><div class='output co'>#&gt; <span class='message'>running chain 2...</span></div><div class='output co'>#&gt; warning: problem initializing stochastic node beta_psi[1]: logProb is -Inf.
+#&gt; warning: problem initializing stochastic node beta_psi[2]: logProb is -Inf.
+#&gt; warning: problem initializing stochastic node beta_p[1]: logProb is -Inf.
+#&gt; warning: problem initializing stochastic node beta_p[2]: logProb is -Inf.
+#&gt; |-------------|-------------|-------------|-------------|
+#&gt; |-------------------------------------------------------|</div><div class='output co'>#&gt; <span class='message'>running chain 3...</span></div><div class='output co'>#&gt; warning: problem initializing stochastic node beta_psi[1]: logProb is -Inf.
+#&gt; warning: problem initializing stochastic node beta_psi[2]: logProb is -Inf.
+#&gt; warning: problem initializing stochastic node beta_p[1]: logProb is -Inf.
+#&gt; warning: problem initializing stochastic node beta_p[2]: logProb is -Inf.
+#&gt; |-------------|-------------|-------------|-------------|
 #&gt; |-------------------------------------------------------|</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Computing posterior likelihood</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Done.</span></div><div class='output co'>#&gt; <span class='message'></span>
@@ -266,8 +278,8 @@ named <code>site</code>, <code>visit</code>, and <code>y</code>. See examples.</
 #&gt; 
 #&gt; The following model was fit:
 #&gt; # priors
-#&gt; for(i in 1:2){beta_psi[i] ~ dnorm(0, 1/2)}
-#&gt; for(i in 1:2){beta_p[i] ~ dnorm(0, 1/2)}
+#&gt; for(i in 1:2){beta_psi[i] ~ dunif(-5, -2)}
+#&gt; for(i in 1:2){beta_p[i] ~ dunif(-5, -2)}
 #&gt; 
 #&gt; # likelihood 
 #&gt; # loop through sites 
@@ -308,60 +320,60 @@ named <code>site</code>, <code>visit</code>, and <code>y</code>. See examples.</
 #&gt; burnin: 2000
 #&gt; 
 #&gt; Multivariate potential scale reduction factor:
-#&gt;  1.0051
+#&gt;  860.2375
 #&gt; 
 #&gt; Potential scale reduction factors:
 #&gt;             Point est. Upper C.I.
-#&gt; beta_psi[1] 1.004      1.007     
-#&gt; beta_psi[2] 1.004      1.011     
-#&gt; beta_p[1]   1.008      1.021     
-#&gt; beta_p[2]   1.012      1.022     
+#&gt; beta_psi[1] 179.1       1119     
+#&gt; beta_psi[2] 115.1        307     
+#&gt; beta_p[1]   912.5       2334     
+#&gt; beta_p[2]   922.4       2708     
 #&gt; 
 #&gt; Occupancy coefficients:
-#&gt;             estimate sd     0.025   0.5      0.975  n_eff
-#&gt; beta_psi[1] -0.03425 0.3722 -0.7075 -0.04151 0.7268 553.6
-#&gt; beta_psi[2] 0.9619   0.4598 0.02332 0.9619   1.898    568
+#&gt;             estimate sd    0.025  0.5    0.975 n_eff
+#&gt; beta_psi[1] 0.2014   1.583 -2.078 1.166  1.469 470.9
+#&gt; beta_psi[2] -0.8423  1.684 -2.109 -2.009 1.538 75.26
 #&gt; 
 #&gt; Detection coefficients:
-#&gt;           estimate sd     0.025   0.5      0.975  n_eff
-#&gt; beta_p[1] -0.03007 0.1663 -0.3561 -0.03284 0.2904 381.9
-#&gt; beta_p[2] 0.9667   0.2058 0.5789  0.9665   1.374  378.6
+#&gt;           estimate sd    0.025  0.5    0.975  n_eff
+#&gt; beta_p[1] -1.123   1.245 -2.011 -2.001 0.6376  1585
+#&gt; beta_p[2] -0.955   1.483 -2.012 -2.001 1.142   1265
 #&gt; 
-#&gt; Type 2 waic: 942.3598</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>)</span>
+#&gt; Type 2 waic: 7512.8948</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; List of 2
 #&gt;  $ samples:List of 3
-#&gt;   ..$ chain1: num [1:4000, 1:104] 1.05 1.05 1.05 1.05 1.05 ...
+#&gt;   ..$ chain1: num [1:4000, 1:104] -0.213 -0.213 -0.213 -0.213 -0.213 ...
 #&gt;   .. ..- attr(*, "dimnames")=List of 2
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:104] "beta_p[1]" "beta_p[2]" "beta_psi[1]" "beta_psi[2]" ...
-#&gt;   ..$ chain2: num [1:4000, 1:104] 0.638 0.638 0.179 0.179 0.179 ...
+#&gt;   ..$ chain2: num [1:4000, 1:104] 0.638 0.638 0.638 0.638 0.638 ...
 #&gt;   .. ..- attr(*, "dimnames")=List of 2
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:104] "beta_p[1]" "beta_p[2]" "beta_psi[1]" "beta_psi[2]" ...
-#&gt;   ..$ chain3: num [1:4000, 1:104] -0.513 -0.513 -0.513 -0.432 -0.432 ...
+#&gt;   ..$ chain3: num [1:4000, 1:104] -0.513 -0.513 -0.513 -0.513 -0.513 ...
 #&gt;   .. ..- attr(*, "dimnames")=List of 2
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:104] "beta_p[1]" "beta_p[2]" "beta_psi[1]" "beta_psi[2]" ...
 #&gt;  $ loglik :List of 3
-#&gt;   ..$ chain1: num [1:4000, 1:100] -1.42 -1.42 -1.05 -1.05 -1.05 ...
+#&gt;   ..$ chain1: num [1:4000, 1:100] -1.42 -1.42 -1.42 -1.42 -1.42 ...
 #&gt;   .. ..- attr(*, "dimnames")=List of 2
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:100] "site1" "site2" "site3" "site4" ...
-#&gt;   ..$ chain2: num [1:4000, 1:100] -1.73 -1.68 -1.51 -1.32 -1.3 ...
+#&gt;   ..$ chain2: num [1:4000, 1:100] -1.73 -1.73 -1.73 -1.73 -1.73 ...
 #&gt;   .. ..- attr(*, "dimnames")=List of 2
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:100] "site1" "site2" "site3" "site4" ...
-#&gt;   ..$ chain3: num [1:4000, 1:100] -0.282 -0.686 -0.475 -0.475 -0.475 ...
+#&gt;   ..$ chain3: num [1:4000, 1:100] -0.3054 -0.0905 -0.0905 -0.0905 -0.1197 ...
 #&gt;   .. ..- attr(*, "dimnames")=List of 2
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:100] "site1" "site2" "site3" "site4" ...
 #&gt;  - attr(*, "class")= chr [1:2] "occ_mod" "list"
-#&gt;  - attr(*, "code")= chr "# priors\nfor(i in 1:2){beta_psi[i] ~ dnorm(0, 1/2)}\nfor(i in 1:2){beta_p[i] ~ dnorm(0, 1/2)}\n\n# likelihood "| __truncated__
+#&gt;  - attr(*, "code")= chr "# priors\nfor(i in 1:2){beta_psi[i] ~ dunif(-5, -2)}\nfor(i in 1:2){beta_p[i] ~ dunif(-5, -2)}\n\n# likelihood "| __truncated__
 #&gt;  - attr(*, "mcmcinfo")= chr [1:8] "===== Monitors =====" "thin = 1: z, beta_psi, beta_p" "===== Samplers =====" "RW sampler (4)" ...
 #&gt;  - attr(*, "occupancy_call")=Class 'formula'  language ~psi_cov1
-#&gt;   .. ..- attr(*, ".Environment")=&lt;environment: 0x7fb9908f7908&gt; 
+#&gt;   .. ..- attr(*, ".Environment")=&lt;environment: 0x7f992ddbf1b0&gt; 
 #&gt;  - attr(*, "detection_call")=Class 'formula'  language ~p_cov1
-#&gt;   .. ..- attr(*, ".Environment")=&lt;environment: 0x7fb9908f7908&gt; </div></pre>
+#&gt;   .. ..- attr(*, ".Environment")=&lt;environment: 0x7f992ddbf1b0&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
