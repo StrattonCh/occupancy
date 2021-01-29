@@ -173,6 +173,10 @@ for proper formatting</p></td>
       <td><p>number of MCMC iterations</p></td>
     </tr>
     <tr>
+      <th>nchains</th>
+      <td><p>number of MCMC chains</p></td>
+    </tr>
+    <tr>
       <th>seed</th>
       <td><p>optional seed</p></td>
     </tr>
@@ -221,7 +225,7 @@ named <code>site</code>, <code>visit</code>, and <code>y</code>. See examples.</
 <span class='co'># fit model</span>
 <span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>occ_mod</span><span class='op'>(</span>occupancy <span class='op'>=</span> <span class='op'>~</span> <span class='va'>psi_cov1</span>, detection <span class='op'>=</span> <span class='op'>~</span> <span class='va'>p_cov1</span>, data <span class='op'>=</span> <span class='va'>data</span>,
               niter <span class='op'>=</span> <span class='fl'>2000</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Writing NIMBLE model to current working directory:</span></div><div class='output co'>#&gt; # priors
+</div><div class='output co'>#&gt; # priors
 #&gt; for(i in 1:2){beta_psi[i] ~ dnorm(0, 1/2)}
 #&gt; for(i in 1:2){beta_p[i] ~ dnorm(0, 1/2)}
 #&gt; 
@@ -255,7 +259,31 @@ named <code>site</code>, <code>visit</code>, and <code>y</code>. See examples.</
 #&gt; |-------------------------------------------------------|</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Computing posterior likelihood</span></div><div class='input'>
 <span class='co'># results</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Call:
+#&gt; occ_mod(occupancy = ~psi_cov1, detection = ~p_cov1)
+#&gt; 
+#&gt; Multivariate potential scale reduction factor:
+#&gt;  1.0316
+#&gt; 
+#&gt; Potential scale reduction factors:
+#&gt;             Point est. Upper C.I.
+#&gt; beta_psi[1] 1.049      1.141     
+#&gt; beta_psi[2] 1.042      1.129     
+#&gt; beta_p[1]   1.006      1.018     
+#&gt; beta_p[2]   1.006      1.015     
+#&gt; 
+#&gt; Occupancy coefficients:
+#&gt;             estimate sd     0.025   0.5    0.975 
+#&gt; beta_psi[1] -0.1686  0.2803 -0.7002 -0.172 0.4433
+#&gt; beta_psi[2]  1.08    0.3298 0.4036  1.089  1.698 
+#&gt; 
+#&gt; Detection coefficients:
+#&gt;           estimate sd      0.025   0.5    0.975 
+#&gt; beta_p[1] 0.1013   0.09737 -0.1103 0.1051 0.2954
+#&gt; beta_p[2] 0.8912   0.1184  0.6689  0.8884 1.128 
+#&gt; 
+#&gt; Type 2 waic: 2316.5757</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; List of 2
 #&gt;  $ samples:List of 3
 #&gt;   ..$ chain1: num [1:2000, 1:254] 0.621 0.621 0.99 0.99 0.99 ...
@@ -285,7 +313,11 @@ named <code>site</code>, <code>visit</code>, and <code>y</code>. See examples.</
 #&gt;   .. .. ..$ : chr [1:250] "site1" "site2" "site3" "site4" ...
 #&gt;  - attr(*, "class")= chr [1:2] "occ_mod" "list"
 #&gt;  - attr(*, "code")= chr "# priors\nfor(i in 1:2){beta_psi[i] ~ dnorm(0, 1/2)}\nfor(i in 1:2){beta_p[i] ~ dnorm(0, 1/2)}\n\n# likelihood "| __truncated__
-#&gt;  - attr(*, "mcmcinfo")= chr [1:8] "===== Monitors =====" "thin = 1: z, beta_psi, beta_p" "===== Samplers =====" "RW sampler (4)" ...</div><div class='input'><span class='va'>ex</span>
+#&gt;  - attr(*, "mcmcinfo")= chr [1:8] "===== Monitors =====" "thin = 1: z, beta_psi, beta_p" "===== Samplers =====" "RW sampler (4)" ...
+#&gt;  - attr(*, "occupancy_call")=Class 'formula'  language ~psi_cov1
+#&gt;   .. ..- attr(*, ".Environment")=&lt;environment: 0x7f89e5bcc7f0&gt; 
+#&gt;  - attr(*, "detection_call")=Class 'formula'  language ~p_cov1
+#&gt;   .. ..- attr(*, ".Environment")=&lt;environment: 0x7f89e5bcc7f0&gt; </div><div class='input'><span class='va'>ex</span>
 </div><div class='output co'>#&gt; Single species, single season site occupancy model fit using NIMBLE.
 #&gt; 
 #&gt; The following model was fit:
@@ -322,15 +354,7 @@ named <code>site</code>, <code>visit</code>, and <code>y</code>. See examples.</
 #&gt;    - beta_psi[]  (2 elements)
 #&gt;    - beta_p[]  (2 elements)
 #&gt;  binary sampler (250)
-#&gt;    - z[]  (250 elements)</div><div class='input'>
-
-
-<span class='co'># lppd &lt;- sum(log(colMeans(exp(loglik))))</span>
-<span class='co'># pwaic1 &lt;- 2 * sum(log(colMeans(exp(loglik))) - colMeans(loglik))</span>
-<span class='co'># pwaic2 &lt;- sum(apply(loglik, 2, var))</span>
-<span class='co'># waic1 &lt;- -2 * (lppd - pwaic1)</span>
-<span class='co'># waic2 &lt;- -2 * (lppd - pwaic2)</span>
-</div></pre>
+#&gt;    - z[]  (250 elements)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
