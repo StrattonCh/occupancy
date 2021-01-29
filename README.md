@@ -11,6 +11,7 @@ This software is provided "AS IS."
 <!-- badges: start -->
 [![R build status](https://github.com/StrattonCh/occupancy/workflows/R-CMD-check/badge.svg)](https://github.com/StrattonCh/occupancy/actions)
 ![pkgdown](https://github.com/StrattonCh/occupancy/workflows/pkgdown/badge.svg)
+ `[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 ## Installation
