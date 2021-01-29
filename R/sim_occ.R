@@ -2,23 +2,23 @@
 #'
 #'@description This function simulates data from the single species, single
 #'  season occupancy model first developed by
-#'  \href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2}{MacKenzie
-#'   et al. (2002)}.
+#'  [MacKenzie
+#'   et al. (2002)](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2).
 #'
 #' @details This function simulates data from the vanilla single season, single
-#'  species occupancy model using the logit link function. If \code{rand_visits
-#'  = TRUE}, each site is visited a random number of times between two and
-#'  \code{max_j}. Covariates are drawn from the uniform(0, 1.5) distribution so
+#'  species occupancy model using the logit link function. If `rand_visits
+#'  = TRUE`, each site is visited a random number of times between two and
+#'  `max_j`. Covariates are drawn from the uniform(0, 1.5) distribution so
 #'  that the effect of the direction of each regression coefficient is
-#'  intuitive. Note that if covariates are not desired, \code{beta_psi} and
-#'  \code{beta_p} can be set to intercepts that generate the desired derived
+#'  intuitive. Note that if covariates are not desired, `beta_psi` and
+#'  `beta_p` can be set to intercepts that generate the desired derived
 #'  probabilities.
 #'
 #'@param M number of sites
-#'@param max_j maximum number of visits to each site. If \code{rand_visits =
-#'  FALSE}, this value is the number of visits to each site. If
-#'  \code{rand_visits = TRUE}, each site is visited a random
-#'  (\code{sample(2:max_j, size = 1)}) number of times.
+#'@param max_j maximum number of visits to each site. If `rand_visits =
+#'  FALSE`, this value is the number of visits to each site. If
+#'  `rand_visits = TRUE`, each site is visited a random
+#'  (`sample(2:max_j, size = 1)`) number of times.
 #'@param beta_psi vector of regression coefficients used to generate psi
 #'@param beta_p vector of regression coefficients used to generate p
 #'@param seed optional seed for reproducibility
@@ -27,18 +27,18 @@
 #'
 #'@example examples/sim_occ_ex.R
 #'
-#'@return object of class \code{list} containing the following elements: \cr
-#'  * \code{beta_psi} vector of regression coefficients used to generate psi
-#'  * \code{beta_p} vector of regression coefficients used to generate p
-#'  * \code{psi_cov} matrix of site level covariates
-#'  * \code{p_cov} array of detection level covariates; each slice represents a
+#'@return object of class `list` containing the following elements: \cr
+#'  * `beta_psi` vector of regression coefficients used to generate psi
+#'  * `beta_p` vector of regression coefficients used to generate p
+#'  * `psi_cov` matrix of site level covariates
+#'  * `p_cov` array of detection level covariates; each slice represents a
 #'  single covariate
-#'  * \code{psi} vector of derived site level occupancy probabilities
-#'  * \code{p} matrix of derived visit level detection probabilities
-#'  * \code{z} vector of latent occupancy states for each site
-#'  * \code{Y} matrix of observed Bernoulli responses
-#'  * \code{n_visits} vector of number of visits to each site
-#'  * \code{data} a data frame containing all information necessary to fit the
+#'  * `psi` vector of derived site level occupancy probabilities
+#'  * `p` matrix of derived visit level detection probabilities
+#'  * `z` vector of latent occupancy states for each site
+#'  * `Y` matrix of observed Bernoulli responses
+#'  * `n_visits` vector of number of visits to each site
+#'  * `data` a data frame containing all information necessary to fit the
 #'  model
 #'
 #'@importFrom magrittr %>%

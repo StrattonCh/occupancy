@@ -16,8 +16,7 @@ sim_occ(
 \arguments{
 \item{M}{number of sites}
 
-\item{max_j}{maximum number of visits to each site. If \code{rand_visits =
- FALSE}, this value is the number of visits to each site. If
+\item{max_j}{maximum number of visits to each site. If \code{rand_visits = FALSE}, this value is the number of visits to each site. If
 \code{rand_visits = TRUE}, each site is visited a random
 (\code{sample(2:max_j, size = 1)}) number of times.}
 
@@ -48,15 +47,11 @@ model
 }
 }
 \description{
-This function simulates data from the single species, single
-season occupancy model first developed by
-\href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658\%282002\%29083\%5B2248\%3AESORWD\%5D2.0.CO\%3B2}{MacKenzie
-et al. (2002)}.
+
 }
 \details{
 This function simulates data from the vanilla single season, single
-species occupancy model using the logit link function. If \code{rand_visits
- = TRUE}, each site is visited a random number of times between two and
+species occupancy model using the logit link function. If \code{rand_visits = TRUE}, each site is visited a random number of times between two and
 \code{max_j}. Covariates are drawn from the uniform(0, 1.5) distribution so
 that the effect of the direction of each regression coefficient is
 intuitive. Note that if covariates are not desired, \code{beta_psi} and

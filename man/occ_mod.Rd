@@ -28,6 +28,8 @@ for proper formatting}
 
 \item{niter}{number of MCMC iterations}
 
+\item{nchains}{number of MCMC chains}
+
 \item{seed}{optional seed}
 
 \item{save_model}{logical; should a text file containing the model be
@@ -46,10 +48,7 @@ containing a \code{matrix} of samples of the log posterior likelihood
 }
 }
 \description{
-This function fits the single species, single
-season site occupancy model first developed by
-\href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658\%282002\%29083\%5B2248\%3AESORWD\%5D2.0.CO\%3B2}{MacKenzie
-et al. (2002)}.
+
 }
 \details{
 This function fits the single season, single species site occupancy

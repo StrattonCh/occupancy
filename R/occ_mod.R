@@ -2,12 +2,12 @@
 #'
 #'@description This function fits the single species, single
 #'  season site occupancy model first developed by
-#'  \href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2}{MacKenzie
-#'   et al. (2002)}.
+#'  [MacKenzie
+#'   et al. (2002)](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2).
 #'
 #'@details This function fits the single season, single species site occupancy
-#'  model using the logit link function. The \code{data} should contain columns
-#'  named \code{site}, \code{visit}, and \code{y}. See examples.
+#'  model using the logit link function. The `data` should contain columns
+#'  named `site`, `visit`, and `y`. See examples.
 #'
 #'@param occupancy model declaration for the occupancy portion of the model
 #'  using standard linear model syntax
@@ -21,16 +21,16 @@
 #'@param save_model logical; should a text file containing the model be
 #'  exported?
 #'@param model_name character string defining the name of the text file
-#'  describing the model if \code{save_model = TRUE}
+#'  describing the model if `save_model = TRUE`
 #' @param nchains number of MCMC chains
 #'
 #'@example examples/occ_mod_ex.R
 #'
-#'@return an object of class \code{list} containing the following:\cr
-#'  * \code{samples} object of class \code{list} of length \code{nchains}, each
-#'  containing a \code{matrix} posterior samples
-#'  * \code{loglik} object of class \code{list} of length code{nchains}, each
-#'  containing a \code{matrix} of samples of the log posterior likelihood
+#'@return an object of class `list` containing the following:\cr
+#'  * `samples` object of class `list` of length `nchains`, each
+#'  containing a `matrix` posterior samples
+#'  * `loglik` object of class `list` of length code{nchains}, each
+#'  containing a `matrix` of samples of the log posterior likelihood
 #'
 #'@export
 #'

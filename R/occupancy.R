@@ -15,10 +15,10 @@
 #'
 #' @seealso
 #' Useful links:
-#'  * \href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2}{MacKenzie
-#'  et al. (2002) occupancy model paper}
-#'  * \href{https://esajournals.onlinelibrary.wiley.com/doi/pdf/10.1890/14-1507.1}{Miller
-#'  et al. (2015) false positive occupancy model review paper}
+#'  * [MacKenzie
+#'  et al. (2002) occupancy model paper](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2)
+#'  * [Miller
+#'  et al. (2015) false positive occupancy model review paper](https://esajournals.onlinelibrary.wiley.com/doi/pdf/10.1890/14-1507.1)
 #'
 #'@name occupancy
 #'
