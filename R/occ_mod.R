@@ -186,7 +186,7 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, nchains = 3, seed 
   data_[["Y"]] <- nimble_data$Y
 
   # write model
-  message("Writing NIMBLE model to current working directory:")
+  if(save_model) message("Writing NIMBLE model to current working directory:")
   cat(code)
 
   fileConn <- file(paste0(model_name, ".txt"))
@@ -252,10 +252,17 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, nchains = 3, seed 
   class(out) <- c("occ_mod", "list")
   attr(out, "code") <- code
   attr(out, "mcmcinfo") <- mcmcinfo
+  attr(out, "occupancy_call") <- occupancy
+  attr(out, "detection_call") <- detection
   return(out)
 }
 
-
+#' Print method for \code{occ_mod} class
+#'
+#' @param x An object of class \link{occ_mod}
+#' @param ... Other arguments passed to or from other methods
+#'
+#' @export
 print.occ_mod <- function(x, ...) {
   cat("Single species, single season site occupancy model fit using NIMBLE.\n")
   cat("\nThe following model was fit:\n")
@@ -264,7 +271,136 @@ print.occ_mod <- function(x, ...) {
   cat(paste0(attr(x, "mcmcinfo"), sep = "\n"))
 }
 
+#' Summary method for \code{occ_mod} class
+#'
+#' @param x An object of class \link{occ_mod}
+#' @param burnin number of iterations to discard as burnin
+#' @param waic_type Type of WAIC to calculate (either 1 or 2)
+#' @param digits number of digits to print in summary
+#' @param ... Other arguments passed to or from other methods
+#'
+#' @export
+summary.occ_mod <- function(x, burnin = nrow(x[["samples"]][[1]])/2, waic_type = 2,
+                            digits = max(3L, getOption("digits") - 3L), ...){
+  # housekeeping
+  niter <- nrow(x[["samples"]][[1]])
+  nchains <- length(x[["samples"]])
 
+  # grab samples
+  samples <- x[["samples"]]
+  loglik <- x[["loglik"]]
+
+  # psrf and mpsrf
+  reg_coefs <- lapply(samples, function(x) x[,c(which(grepl("_psi[[]", colnames(x))), which(grepl("_p[[]", colnames(x))))])
+  gelman <- coda::gelman.diag(coda::as.mcmc.list(lapply(reg_coefs, function(x) coda::as.mcmc(x))))
+
+  # combine chains
+  samples_burnin <- do.call("rbind", lapply(samples, function(x) x[(burnin+1):nrow(x),]))
+  loglik_burnin <- do.call("rbind", lapply(loglik, function(x) x[(burnin+1):nrow(x),]))
+
+  # create call
+  call <- paste0(
+    "occ_mod(occupancy = ",
+    paste0(as.character(attr(x, "occupancy_call")), collapse = ""),
+    ", detection = ",
+    paste0(as.character(attr(x, "detection_call")), collapse = ""),
+    ")"
+  )
+
+  # occupancy coefficients
+  occupancy_coef <- samples_burnin[, grepl("_psi[[]", colnames(samples_burnin))]
+  occ_coef <- cbind(
+    estimate = colMeans(occupancy_coef),
+    sd = apply(occupancy_coef, 2, sd),
+    `0.025` = apply(occupancy_coef, 2, quantile, prob = .025),
+    `0.5` = apply(occupancy_coef, 2, quantile, prob = .5),
+    `0.975` = apply(occupancy_coef, 2, quantile, prob = .975)
+  )
+
+  # detection coefficients
+  detection_coef <- samples_burnin[, grepl("_p[[]", colnames(samples_burnin))]
+  detect_coef <- cbind(
+    estimate = colMeans(detection_coef),
+    sd = apply(detection_coef, 2, sd),
+    `0.025` = apply(detection_coef, 2, quantile, prob = .025),
+    `0.5` = apply(detection_coef, 2, quantile, prob = .5),
+    `0.975` = apply(detection_coef, 2, quantile, prob = .975)
+  )
+
+  # waic
+  lppd <- sum(log(colMeans(exp(loglik_burnin))))
+  pwaic1 <- 2 * sum(log(colMeans(exp(loglik_burnin))) - colMeans(loglik_burnin))
+  pwaic2 <- sum(apply(loglik_burnin, 2, var))
+  waic1 <- -2 * (lppd - pwaic1)
+  waic2 <- -2 * (lppd - pwaic2)
+
+  out <- list(
+    call = call,
+    occ_coef = occ_coef,
+    detect_coef = detect_coef,
+    waic1 = waic1,
+    waic2 = waic2,
+    gelman.diag = gelman
+  )
+  class(out) <- "summary.occ_mod"
+  attr(out, "waic_type") <- waic_type
+  attr(out, "digits") <- digits
+  return(out)
+}
+
+#' Print method for \code{summary.occ_mod} class
+#'
+#' @param x An object of class \link{summary.occ_mod}
+#' @param ... Other arguments passed to or from other methods
+#'
+#' @export
+print.summary.occ_mod <- function(x, ...){
+  # call
+  cat(
+    paste0(
+      "Call:\n",
+      x[["call"]], "\n"
+    )
+  )
+
+  # convergence diagnostics
+  cat(
+    paste0(
+      "\nMultivariate potential scale reduction factor:\n ",
+      round(x[["gelman.diag"]][['mpsrf']], digits = attr(x, "digits")), "\n"
+    )
+  )
+  cat(
+    paste0(
+      "\nPotential scale reduction factors:\n"
+    )
+  )
+  print(noquote(t(apply(x[["gelman.diag"]][["psrf"]], 1, formatC, digits = attr(x, "digits")))))
+
+  # occupancy coeff
+  cat(
+    paste0(
+      "\nOccupancy coefficients:\n"
+    )
+  )
+  print(noquote(t(apply(x[["occ_coef"]], 1, formatC, digits = attr(x, "digits")))))
+
+  # detection coef
+  cat(
+    paste0(
+      "\nDetection coefficients:\n"
+    )
+  )
+  print(noquote(t(apply(x[["detect_coef"]], 1, formatC, digits = attr(x, "digits")))))
+
+  # waic
+  waic <- ifelse(attr(x, "waic_type") == 1, x[["waic1"]], x[["waic2"]])
+  cat(
+    paste0(
+      "\nType ", attr(x, "waic_type"), " waic: ", round(waic, digits = attr(x, "digits")), "\n"
+    )
+  )
+}
 
 
 

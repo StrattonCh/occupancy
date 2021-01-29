@@ -28,6 +28,8 @@ for proper formatting}
 
 \item{niter}{number of MCMC iterations}
 
+\item{nchains}{number of MCMC chains}
+
 \item{seed}{optional seed}
 
 \item{save_model}{logical; should a text file containing the model be
@@ -70,14 +72,7 @@ ex <- occ_mod(occupancy = ~ psi_cov1, detection = ~ p_cov1, data = data,
               niter = 2000)
 
 # results
+summary(ex)
 str(ex)
 ex
-
-
-
-# lppd <- sum(log(colMeans(exp(loglik))))
-# pwaic1 <- 2 * sum(log(colMeans(exp(loglik))) - colMeans(loglik))
-# pwaic2 <- sum(apply(loglik, 2, var))
-# waic1 <- -2 * (lppd - pwaic1)
-# waic2 <- -2 * (lppd - pwaic2)
 }

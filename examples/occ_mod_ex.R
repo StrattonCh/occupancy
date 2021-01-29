@@ -11,13 +11,6 @@ ex <- occ_mod(occupancy = ~ psi_cov1, detection = ~ p_cov1, data = data,
               niter = 2000)
 
 # results
-str(ex)
 ex
-
-
-
-# lppd <- sum(log(colMeans(exp(loglik))))
-# pwaic1 <- 2 * sum(log(colMeans(exp(loglik))) - colMeans(loglik))
-# pwaic2 <- sum(apply(loglik, 2, var))
-# waic1 <- -2 * (lppd - pwaic1)
-# waic2 <- -2 * (lppd - pwaic2)
+summary(ex)
+str(ex)
