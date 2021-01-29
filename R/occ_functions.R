@@ -2,23 +2,23 @@
 #'
 #'@description This function simulates data from the single species, single
 #'  season occupancy model first developed by
-#'  \href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2}{MacKenzie
-#'   et al. (2002)}.
+#'  [MacKenzie
+#'   et al. (2002)](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2).
 #'
 #' @details This function simulates data from the vanilla single season, single
-#'  species occupancy model using the logit link function. If \code{rand_visits
-#'  = TRUE}, each site is visited a random number of times between two and
-#'  \code{max_j}. Covariates are drawn from the uniform(0, 1.5) distribution so
+#'  species occupancy model using the logit link function. If `rand_visits
+#'  = TRUE`, each site is visited a random number of times between two and
+#'  `max_j`. Covariates are drawn from the uniform(0, 1.5) distribution so
 #'  that the effect of the direction of each regression coefficient is
-#'  intuitive. Note that if covariates are not desired, \code{beta_psi} and
-#'  \code{beta_p} can be set to intercepts that generate the desired derived
+#'  intuitive. Note that if covariates are not desired, `beta_psi` and
+#'  `beta_p` can be set to intercepts that generate the desired derived
 #'  probabilities.
 #'
 #'@param M number of sites
-#'@param max_j maximum number of visits to each site. If \code{rand_visits =
-#'  FALSE}, this value is the number of visits to each site. If
-#'  \code{rand_visits = TRUE}, each site is visited a random
-#'  (\code{sample(2:max_j, size = 1)}) number of times.
+#'@param max_j maximum number of visits to each site. If `rand_visits =
+#'  FALSE`, this value is the number of visits to each site. If
+#'  `rand_visits = TRUE`, each site is visited a random
+#'  (`sample(2:max_j, size = 1)`) number of times.
 #'@param beta_psi vector of regression coefficients used to generate psi
 #'@param beta_p vector of regression coefficients used to generate p
 #'@param seed optional seed for reproducibility
@@ -27,18 +27,18 @@
 #'
 #'@example examples/sim_occ_ex.R
 #'
-#'@return object of class \code{list} containing the following elements: \cr
-#'  * \code{beta_psi} vector of regression coefficients used to generate psi
-#'  * \code{beta_p} vector of regression coefficients used to generate p
-#'  * \code{psi_cov} matrix of site level covariates
-#'  * \code{p_cov} array of detection level covariates; each slice represents a
+#'@return object of class `list` containing the following elements: \cr
+#'  * `beta_psi` vector of regression coefficients used to generate psi
+#'  * `beta_p` vector of regression coefficients used to generate p
+#'  * `psi_cov` matrix of site level covariates
+#'  * `p_cov` array of detection level covariates; each slice represents a
 #'  single covariate
-#'  * \code{psi} vector of derived site level occupancy probabilities
-#'  * \code{p} matrix of derived visit level detection probabilities
-#'  * \code{z} vector of latent occupancy states for each site
-#'  * \code{Y} matrix of observed Bernoulli responses
-#'  * \code{n_visits} vector of number of visits to each site
-#'  * \code{data} a data frame containing all information necessary to fit the
+#'  * `psi` vector of derived site level occupancy probabilities
+#'  * `p` matrix of derived visit level detection probabilities
+#'  * `z` vector of latent occupancy states for each site
+#'  * `Y` matrix of observed Bernoulli responses
+#'  * `n_visits` vector of number of visits to each site
+#'  * `data` a data frame containing all information necessary to fit the
 #'  model
 #'
 #'@importFrom magrittr %>%
@@ -184,12 +184,12 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
 #'
 #'@description This function fits the single species, single
 #'  season site occupancy model first developed by
-#'  \href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2}{MacKenzie
-#'   et al. (2002)}.
+#'  [MacKenzie
+#'   et al. (2002)](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2).
 #'
 #'@details This function fits the single season, single species site occupancy
-#'  model using the logit link function. The \code{data} should contain columns
-#'  named \code{site}, \code{visit}, and \code{y}. See examples.
+#'  model using the logit link function. The `data` should contain columns
+#'  named `site`, `visit`, and `y`. See examples.
 #'
 #'@param occupancy model declaration for the occupancy portion of the model
 #'  using standard linear model syntax
@@ -203,21 +203,21 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
 #'@param save_model logical; should a text file containing the model be
 #'  exported?
 #'@param model_name character string defining the name of the text file
-#'  describing the model if \code{save_model = TRUE}
+#'  describing the model if `save_model = TRUE`
 #'@param nchains number of MCMC chains
 #'@param beta_prior character string defining prior distribution for regression
 #'  coefficients at the occupancy and detection levels. Priors should be
 #'  specified using distributions available in NIMBLE. See
-#'  \href{https://r-nimble.org/html_manual/cha-writing-models.html#subsec:dists-and-functions}{Available
-#'   distributons in NIMBLE}. et al. (2002)}.
+#'  [Available
+#'   distributons in NIMBLE](https://r-nimble.org/html_manual/cha-writing-models.html#subsec:dists-and-functions). et al. (2002)}.
 #'
 #'@example examples/occ_mod_ex.R
 #'
-#'@return an object of class \code{list} containing the following:\cr
-#'  * \code{samples} object of class \code{list} of length \code{nchains}, each
-#'  containing a \code{matrix} posterior samples
-#'  * \code{loglik} object of class \code{list} of length code{nchains}, each
-#'  containing a \code{matrix} of samples of the log posterior likelihood
+#'@return an object of class `list` containing the following:\cr
+#'  * `samples` object of class `list` of length `nchains`, each
+#'  containing a `matrix` posterior samples
+#'  * `loglik` object of class `list` of length code{nchains}, each
+#'  containing a `matrix` of samples of the log posterior likelihood
 #'
 #'@export
 #'
@@ -467,9 +467,9 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, nchains = 3, seed 
   return(out)
 }
 
-#' Print method for \code{occ_mod} class
+#' Print method for `occ_mod` class
 #'
-#' @param x An object of class \link{occ_mod}
+#' @param x An object of class [occ_mod]
 #' @param ... Other arguments passed to or from other methods
 #'
 #' @export
@@ -481,9 +481,9 @@ print.occ_mod <- function(x, ...) {
   cat(paste0(attr(x, "mcmcinfo"), sep = "\n"))
 }
 
-#' Summary method for \code{occ_mod} class
+#' Summary method for `occ_mod` class
 #'
-#' @param x An object of class \link{occ_mod}
+#' @param x An object of class [occ_mod]
 #' @param burnin number of iterations to discard as burnin
 #' @param waic_type Type of WAIC to calculate (either 1 or 2)
 #' @param digits number of digits to print in summary
@@ -564,9 +564,9 @@ summary.occ_mod <- function(x, burnin = nrow(x[["samples"]][[1]])/2, waic_type =
   return(out)
 }
 
-#' Print method for \code{summary.occ_mod} class
+#' Print method for `summary.occ_mod` class
 #'
-#' @param x An object of class \link{summary.occ_mod}
+#' @param x An object of class [summary.occ_mod]
 #' @param ... Other arguments passed to or from other methods
 #'
 #' @export
