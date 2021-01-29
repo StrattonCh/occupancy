@@ -1,5 +1,5 @@
 # simulate data
-sim <- sim_occ(M = 250, max_j = 10, seed = 01012021, rand_visits = FALSE)
+sim <- sim_occ(M = 100, max_j = 10, seed = 01012021, rand_visits = FALSE)
 data <- sim$data
 
 # note structure of data frame
@@ -8,7 +8,7 @@ head(data)
 
 # fit model
 ex <- occ_mod(occupancy = ~ psi_cov1, detection = ~ p_cov1, data = data,
-              niter = 2000)
+              niter = 4000, beta_prior = "dunif(-5, -2)")
 
 # results
 ex
