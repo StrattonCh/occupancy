@@ -38,6 +38,11 @@ exported?}
 
 \item{model_name}{character string defining the name of the text file
 describing the model if \code{save_model = TRUE}}
+
+\item{beta_prior}{character string defining prior distribution for regression
+coefficients at the occupancy and detection levels. Priors should be
+specified using distributions available in NIMBLE. See
+\href{https://r-nimble.org/html_manual/cha-writing-models.html#subsec:dists-and-functions). et al. (2002)}{available distributons in NIMBLE}}
 }
 \value{
 an object of class \code{list} containing the following:\cr
@@ -49,7 +54,9 @@ containing a \code{matrix} of samples of the log posterior likelihood
 }
 }
 \description{
-
+This function fits the single species, single
+season site occupancy model first developed by
+\href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658\%282002\%29083\%5B2248\%3AESORWD\%5D2.0.CO\%3B2}{MacKenzie et al. (2002)}.
 }
 \details{
 This function fits the single season, single species site occupancy
