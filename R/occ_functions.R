@@ -1,11 +1,11 @@
-#'@title Simulate data from the single species, single season site occupancy model.
+#'@title Simulate data from the single species, single season site occupancy
+#'  model.
 #'
 #'@description This function simulates data from the single species, single
 #'  season occupancy model first developed by
-#'  [MacKenzie
-#'   et al. (2002)](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2).
+#'  \href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2}{MacKenzie et al. (2002)}.
 #'
-#' @details This function simulates data from the vanilla single season, single
+#'@details This function simulates data from the vanilla single season, single
 #'  species occupancy model using the logit link function. If `rand_visits
 #'  = TRUE`, each site is visited a random number of times between two and
 #'  `max_j`. Covariates are drawn from the uniform(0, 1.5) distribution so
@@ -184,8 +184,7 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
 #'
 #'@description This function fits the single species, single
 #'  season site occupancy model first developed by
-#'  [MacKenzie
-#'   et al. (2002)](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2).
+#'  \href{https://esajournals.onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B2248%3AESORWD%5D2.0.CO%3B2}{MacKenzie et al. (2002)}.
 #'
 #'@details This function fits the single season, single species site occupancy
 #'  model using the logit link function. The `data` should contain columns
@@ -208,8 +207,7 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
 #'@param beta_prior character string defining prior distribution for regression
 #'  coefficients at the occupancy and detection levels. Priors should be
 #'  specified using distributions available in NIMBLE. See
-#'  [Available
-#'   distributons in NIMBLE](https://r-nimble.org/html_manual/cha-writing-models.html#subsec:dists-and-functions). et al. (2002)}.
+#'  \href{https://r-nimble.org/html_manual/cha-writing-models.html#subsec:dists-and-functions). et al. (2002)}{available distributons in NIMBLE}
 #'
 #'@example examples/occ_mod_ex.R
 #'
@@ -223,17 +221,7 @@ sim_occ <- function(M = 20, max_j = 10, beta_psi = c(0, 1), beta_p = c(0, 1),
 #'
 #'@md
 
-# GET FITTED VALUES
 # WRITE INITS FUNCTIONS FOR EACH PRIOR FAMILY
-
-# occupancy = ~ psi_cov1
-# detection = ~ p_cov1
-# niter = 1000
-# nchains = 3
-# seed = NULL
-# save_model = FALSE
-# model_name = paste0("occ_model_", Sys.Date())
-
 occ_mod <- function(occupancy, detection, data, niter = 1000, nchains = 3, seed = NULL,
                     save_model = FALSE, model_name = paste0("occ_model_", Sys.Date()),
                     beta_prior = "dnorm(0, 1/2)"){
@@ -405,7 +393,7 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, nchains = 3, seed 
   model_c <- nimble::compileNimble(model)
 
   message("\nBuilding R MCMC object")
-  mcmcinfo <- capture.output(mcmc <- nimble::buildMCMC(model_c, monitors = c("z", "beta_psi", "beta_p")))
+  mcmcinfo <- utils::capture.output(mcmc <- nimble::buildMCMC(model_c, monitors = c("z", "beta_psi", "beta_p")))
 
   message("\nCompiling R MCMC object to C")
   mcmc_c <- nimble::compileNimble(mcmc)
@@ -447,16 +435,37 @@ occ_mod <- function(occupancy, detection, data, niter = 1000, nchains = 3, seed 
 
   # compute fitted values
   message("\nComputing fitted values.\n")
+  psi_mcmc <- list()
+  p_mcmc <- list()
   for(i in 1:nchains){
     # psi
     betas <- samples[[i]][,grepl("_psi[[]", colnames(samples[[i]]))]
     tmp <- exp(betas %*% t(occupancy_mod_matrix))
     psi <- tmp / (1 + tmp)
+    colnames(psi) <- paste0("site", 1:ncol(psi))
+    psi_mcmc[[paste0("chain", i)]] <- psi
+
+    # detection
+    betas <- samples[[i]][,grepl("_p[[]", colnames(samples[[i]]))]
+    p_mcmc_chain <- array(0, dim = c(
+      nrow(psi), nrow(detection_covariates[[1]]), ncol(detection_covariates[[2]])
+    ))
+    for(iter in 1:nrow(psi)){
+      beta_iter <- betas[iter,]
+      tmp <- sapply(1:length(detection_covariates), function(x) beta_iter[x] * detection_covariates[[x]], simplify = "array")
+      tmp2 <- exp(apply(tmp, 2, rowSums))
+      p_mcmc_chain[iter,,] <- tmp2 / (1 + tmp2)
+      dimnames(p_mcmc_chain)[[2]] <- paste0("site", 1:(dim(p_mcmc_chain)[2]))
+      dimnames(p_mcmc_chain)[[3]] <- paste0("visit", 1:(dim(p_mcmc_chain)[3]))
+
+    }
+    p_mcmc[[paste0("chain", i)]] <- p_mcmc_chain
+
   }
   cat("\nDone.\n")
 
   # return
-  out <- list(samples = samples, loglik = loglik)
+  out <- list(samples = samples, loglik = loglik, derived = list(psi = psi_mcmc, p = p_mcmc))
 
   # attributes
   class(out) <- c("occ_mod", "list")
@@ -522,10 +531,10 @@ summary.occ_mod <- function(x, burnin = nrow(x[["samples"]][[1]])/2, waic_type =
   occupancy_coef <- samples_burnin[, grepl("_psi[[]", colnames(samples_burnin))]
   occ_coef <- cbind(
     estimate = colMeans(occupancy_coef),
-    sd = apply(occupancy_coef, 2, sd),
-    `0.025` = apply(occupancy_coef, 2, quantile, prob = .025),
-    `0.5` = apply(occupancy_coef, 2, quantile, prob = .5),
-    `0.975` = apply(occupancy_coef, 2, quantile, prob = .975),
+    sd = apply(occupancy_coef, 2, stats::sd),
+    `0.025` = apply(occupancy_coef, 2, stats::quantile, prob = .025),
+    `0.5` = apply(occupancy_coef, 2, stats::quantile, prob = .5),
+    `0.975` = apply(occupancy_coef, 2, stats::quantile, prob = .975),
     n_eff = n_eff[grepl("_psi[[]", names(n_eff))]
   )
 
@@ -533,17 +542,17 @@ summary.occ_mod <- function(x, burnin = nrow(x[["samples"]][[1]])/2, waic_type =
   detection_coef <- samples_burnin[, grepl("_p[[]", colnames(samples_burnin))]
   detect_coef <- cbind(
     estimate = colMeans(detection_coef),
-    sd = apply(detection_coef, 2, sd),
-    `0.025` = apply(detection_coef, 2, quantile, prob = .025),
-    `0.5` = apply(detection_coef, 2, quantile, prob = .5),
-    `0.975` = apply(detection_coef, 2, quantile, prob = .975),
+    sd = apply(detection_coef, 2, stats::sd),
+    `0.025` = apply(detection_coef, 2, stats::quantile, prob = .025),
+    `0.5` = apply(detection_coef, 2, stats::quantile, prob = .5),
+    `0.975` = apply(detection_coef, 2, stats::quantile, prob = .975),
     n_eff = n_eff[grepl("_p[[]", names(n_eff))]
   )
 
   # waic
   lppd <- sum(log(colMeans(exp(loglik_burnin))))
   pwaic1 <- 2 * sum(log(colMeans(exp(loglik_burnin))) - colMeans(loglik_burnin))
-  pwaic2 <- sum(apply(loglik_burnin, 2, var))
+  pwaic2 <- sum(apply(loglik_burnin, 2, stats::var))
   waic1 <- -2 * (lppd - pwaic1)
   waic2 <- -2 * (lppd - pwaic2)
 
