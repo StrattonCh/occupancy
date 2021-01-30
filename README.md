@@ -1,5 +1,7 @@
 # occupancy
 
+test
+
 occupancy is designed to be a one stop shop for the latest in Bayesian occupancy modeling. This package allows users to fit and analyze occupancy models in R. 
 
 Disclaimer: This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey, an agency of the United States Department of Interior. For more information, see the official USGS copyright policy
