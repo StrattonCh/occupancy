@@ -1,29 +1,89 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # occupancy
 
-test
-
-occupancy is designed to be a one stop shop for the latest in Bayesian occupancy modeling. This package allows users to fit and analyze occupancy models in R. 
-
-Disclaimer: This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey, an agency of the United States Department of Interior. For more information, see the official USGS copyright policy
-
-Although this software program has been used by the U.S. Geological Survey (USGS), no warranty, expressed or implied, is made by the USGS or the U.S. Government as to the accuracy and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and no responsibility is assumed by the USGS in connection therewith.
-
-This software is provided "AS IS."
-
 <!-- badges: start -->
-[![R build status](https://github.com/StrattonCh/occupancy/workflows/R-CMD-check/badge.svg)](https://github.com/StrattonCh/occupancy/actions)
+
+[![R build
+status](https://github.com/StrattonCh/occupancy/workflows/R-CMD-check/badge.svg)](https://github.com/StrattonCh/occupancy/actions)
 ![pkgdown](https://github.com/StrattonCh/occupancy/workflows/pkgdown/badge.svg)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
+
+The goal of occupancy is to be a one stop shop for the latest in
+Bayesian occupancy modeling. This package allows users to fit and
+analyze occupancy models in R.
 
 ## Installation
 
- ```{r, eval = FALSE}
+<!-- You can install the released version of occupancy from [CRAN](https://CRAN.R-project.org) with: -->
 
-# Install development version from GitHub
+<!-- ``` r -->
+
+<!-- install.packages("occupancy") -->
+
+<!-- ``` -->
+
+<!-- And the development version from [GitHub](https://github.com/) with: -->
+
+You can install the development version of occupancy from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
 devtools::install_github("StrattonCh/occupancy")
 ```
 
-## Function Overview
+## Example
 
-## Getting Started
+This is a basic example which shows you how to solve a common problem:
+
+``` r
+library(occupancy)
+#> Loading required package: nimble
+#> nimble version 0.9.1 is loaded.
+#> For more information on NIMBLE and a User Manual,
+#> please visit http://R-nimble.org.
+#> 
+#> Attaching package: 'nimble'
+#> The following object is masked from 'package:stats':
+#> 
+#>     simulate
+## basic example code
+```
+
+<!-- What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so: -->
+
+<!-- ```{r cars} -->
+
+<!-- summary(cars) -->
+
+<!-- ``` -->
+
+<!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>. -->
+
+<!-- You can also embed plots, for example: -->
+
+<!-- ```{r pressure, echo = FALSE} -->
+
+<!-- plot(pressure) -->
+
+<!-- ``` -->
+
+<!-- In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN. -->
+
+\#\#Disclaimer
+
+This software is in the public domain because it contains materials that
+originally came from the U.S. Geological Survey, an agency of the United
+States Department of Interior. For more information, see the official
+USGS copyright policy
+
+Although this software program has been used by the U.S. Geological
+Survey (USGS), no warranty, expressed or implied, is made by the USGS or
+the U.S. Government as to the accuracy and functioning of the program
+and related program material nor shall the fact of distribution
+constitute any such warranty, and no responsibility is assumed by the
+USGS in connection therewith.
