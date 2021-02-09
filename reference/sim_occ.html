@@ -220,207 +220,207 @@ probabilities.</p>
     <pre class="examples"><div class='input'><span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'>sim_occ</span><span class='op'>(</span>M <span class='op'>=</span> <span class='fl'>100</span>, max_j <span class='op'>=</span> <span class='fl'>20</span>, beta_psi <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, beta_p <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, rand_visits <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>sim</span><span class='op'>$</span><span class='va'>Y</span>
 </div><div class='output co'>#&gt;        [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
-#&gt;   [1,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;   [2,]    1    1    0    1    1    1    1    1    0     1     1     0    NA
-#&gt;   [3,]    1    1    0    1    1    0    1   NA   NA    NA    NA    NA    NA
-#&gt;   [4,]    1    0    0    0    1    0    1    1   NA    NA    NA    NA    NA
-#&gt;   [5,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;   [6,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;   [7,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;   [8,]    0    0    0    0    0    0    0    0    0     0    NA    NA    NA
-#&gt;   [9,]    0    0    0   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [10,]    1    1    1    1    1   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [11,]    0    0   NA   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [12,]    0    1    0    1   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [13,]    0    0   NA   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [14,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [15,]    1    1    1    0    1    1    1    1    1     0     1     1     1
-#&gt;  [16,]    1    0    0    0    1    1    1    1    1    NA    NA    NA    NA
-#&gt;  [17,]    1    0    0    1    0    1    0    1    1     1     1     1     1
-#&gt;  [18,]    0    0    0    0    0    0    0    0   NA    NA    NA    NA    NA
-#&gt;  [19,]    1    1    1    1    1    1    1    1    0     1     1    NA    NA
-#&gt;  [20,]    1    1    1    1    1    0   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [21,]    1    1    1   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [22,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [23,]    1    1    1    1    1    1    1    1    1     1     1     1     1
-#&gt;  [24,]    1    0    0    1    1   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [25,]    1    1    1    1   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [26,]    1    1    1    1    1    1    1    1    1     1     1     1    NA
-#&gt;  [27,]    1    1    1   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [28,]    0    0    1    1    1    0    1    1    1     1     1    NA    NA
-#&gt;  [29,]    1    1    1    1    1    1   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [30,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [31,]    1    1    1    1    1    1    1    1    1     1     1     1     1
-#&gt;  [32,]    1    1    1    1    1    1    1   NA   NA    NA    NA    NA    NA
-#&gt;  [33,]    1    1    0    1    0    1    1    1    1     0     1    NA    NA
-#&gt;  [34,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [35,]    1    1    1    1    1   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [36,]    0    0    0    0    0    0    0    0    0     0    NA    NA    NA
-#&gt;  [37,]    1    0    1    1    1    1    1    1    1     1     1     1     0
-#&gt;  [38,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [39,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [40,]    0    1    0    1    1    1    0    1    1     0     1     1     1
-#&gt;  [41,]    1    1    1    1    0    0    1    0    1     1     1     1     1
-#&gt;  [42,]    1    1    1    1    1    1    1    1    1     1    NA    NA    NA
-#&gt;  [43,]    0    1    0    1    0    1    1    1    1     0     0     1     0
-#&gt;  [44,]    1    0    1    1    1    1   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [45,]    0    0    0    0   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [46,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;   [1,]    0    0    0    0    0    0    0    0    0     0     0    NA    NA
+#&gt;   [2,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;   [3,]    0    0    0    0    0    0    0   NA   NA    NA    NA    NA    NA
+#&gt;   [4,]    1    0    1    1    1    1   NA   NA   NA    NA    NA    NA    NA
+#&gt;   [5,]    1    1    1    1    1    0    1    1    1     1     1     1     0
+#&gt;   [6,]    1    0    0    0    1    1    1    1    1     1     1     0     1
+#&gt;   [7,]    0    1    1    1   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;   [8,]    0    1    1    1    1    1    1    1    0     1     1     1     1
+#&gt;   [9,]    1    1    1    1   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [10,]    0    0   NA   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [11,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [12,]    1    0    1    1    0    1    1    0    0     1    NA    NA    NA
+#&gt;  [13,]    0    0    0   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [14,]    1    1    1    1    0    0    1    1    1     1     1     1     1
+#&gt;  [15,]    0    1    0    1    1    1    1    1    1     1     0     1     1
+#&gt;  [16,]    0    1    1    1    1   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [17,]    1    1    1    1    1    1    1    0    1     1     1     1     0
+#&gt;  [18,]    0    1    1    0    1    1    1    1    1     1     1     1     1
+#&gt;  [19,]    1    1    1    1    1    1    1    1    1     1     1     1     0
+#&gt;  [20,]    1    1    1    1    1    0    1    1    1     0     1     1     1
+#&gt;  [21,]    1    1    1    1    1    1    1    0    1     1    NA    NA    NA
+#&gt;  [22,]    0    0    1    1    1    0    1    1    1     1     1     0     1
+#&gt;  [23,]    1    1    1    1    1    1    1    1    1     0     1     1     1
+#&gt;  [24,]    1    1    1    1    1    1    1    1    1     1     1     1     1
+#&gt;  [25,]    1    1    1    0    1    1    1    1    1     1     1     1     1
+#&gt;  [26,]    0    1    1    1    1   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [27,]    0    1    1    1    1    1    1    1    1     1     1     0     1
+#&gt;  [28,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [29,]    0    1    1    1    1    1    1    1    1     1    NA    NA    NA
+#&gt;  [30,]    1    1    1   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [31,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [32,]    0    0    0    0    0    0    0    0    0     0     0     0    NA
+#&gt;  [33,]    0    1    1    1    1    1    1    1    1     1     1     1     1
+#&gt;  [34,]    1    1    1    0    1    1    1    1    1     0     0     1     1
+#&gt;  [35,]    0    0    0    0    0    0    0    0   NA    NA    NA    NA    NA
+#&gt;  [36,]    1    1    1    1    1    1    1    1    1     1     1     1     1
+#&gt;  [37,]    1    1    1   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [38,]    1    1    1    1    1   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [39,]    1    0    0    0    1    1    1    1    0     0    NA    NA    NA
+#&gt;  [40,]    1    1    1    1    1    0    1    1    0    NA    NA    NA    NA
+#&gt;  [41,]    1    1    1    1    1    1    1    1    1     0     1     1     1
+#&gt;  [42,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [43,]    0    0    1    1    1    0    1   NA   NA    NA    NA    NA    NA
+#&gt;  [44,]    1    1    1    0    1   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [45,]    0    1    1    1    1    1    1    1    1     1     0     1     0
+#&gt;  [46,]    1    1    1    1    1   NA   NA   NA   NA    NA    NA    NA    NA
 #&gt;  [47,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [48,]    1    0   NA   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [49,]    1    1    1    1    1    0    0    1    0     1     1    NA    NA
-#&gt;  [50,]    1    1    1    1    0    1    1    1    0     1     1     0     0
-#&gt;  [51,]    1    0    1    1    0    1    1    1    1     0     1     1     1
-#&gt;  [52,]    1    1   NA   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [53,]    1    1    0    1   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [54,]    1    1    1    1   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [55,]    1    1    0    1    1    1    1    1    1     1     1     1     0
-#&gt;  [56,]    0    0    0    0    0    0    0   NA   NA    NA    NA    NA    NA
-#&gt;  [57,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [58,]    1    1    1    0    1    1    1    1    0     1     1     1     1
-#&gt;  [59,]    1    1   NA   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [60,]    0    0    1    1    1    1    1    1    1     1     1     1    NA
-#&gt;  [61,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [62,]    1    1    1    1    1    0    0    0   NA    NA    NA    NA    NA
-#&gt;  [63,]    1    1    1    1    1   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [64,]    1    1    1    1    1    1   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [65,]    1    1    1   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [66,]    1    1    1    0    1    0    1    1    1     1     1     1     1
-#&gt;  [67,]    0    0    0    0   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [48,]    0    0    0    0    0    0    0    0   NA    NA    NA    NA    NA
+#&gt;  [49,]    1    1   NA   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [50,]    1    1    0    1    1    1    1    1    0     0     1     1    NA
+#&gt;  [51,]    0    0    0    0   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [52,]    0    0    0    0    0   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [53,]    1    1    0    0    1   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [54,]    0    0    0    0    0    0    0    0   NA    NA    NA    NA    NA
+#&gt;  [55,]    1    1    1    1    1    1    1    1    0     1     1     1     1
+#&gt;  [56,]    0    1    1    1    0    1    1    0    0     1     1     1     1
+#&gt;  [57,]    1    1    1    1    0    1    1   NA   NA    NA    NA    NA    NA
+#&gt;  [58,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [59,]    0    1    1    1    1    1    1    1    0     1     1     1     1
+#&gt;  [60,]    1    1    1    1    1    0    1   NA   NA    NA    NA    NA    NA
+#&gt;  [61,]    0    1    1    1    1   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [62,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [63,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [64,]    1    0   NA   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [65,]    0    1    1    0    0    1    1    1    1     0     1     0     1
+#&gt;  [66,]    1    1    1    1    0   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [67,]    1    1    1    0    1    1    1    1    1     1     0     0     1
 #&gt;  [68,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [69,]    1    1    1   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [70,]    1    1    1    1    1    1    0    1    0     1    NA    NA    NA
-#&gt;  [71,]    1    1    0    1    1    0    1    0    1    NA    NA    NA    NA
-#&gt;  [72,]    1    1    0    1    1    1    1    1    0     1    NA    NA    NA
-#&gt;  [73,]    1    1    1    0    1    1    1    1    1    NA    NA    NA    NA
-#&gt;  [74,]    0    0    0    0   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [75,]    1    1    1    1    1    1    1    1    1     1     1     1     1
-#&gt;  [76,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [77,]    0    1    1    1    1   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [78,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [79,]    1    1    0    1    1    1    1    1    1     1    NA    NA    NA
-#&gt;  [80,]    0    1    1    1    1    1    0    1   NA    NA    NA    NA    NA
-#&gt;  [81,]    1    1    1    0    0    1    1    0    1     1     1     1    NA
-#&gt;  [82,]    0    1    1    1    1    1    1    1    0     1     1     1     1
-#&gt;  [83,]    1    1    1    1    1    1    1    1    1     1     1     0     1
-#&gt;  [84,]    1    0    1    0    0    1    0    1    1    NA    NA    NA    NA
-#&gt;  [85,]    1    1    1    1    1    1   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [86,]    1    1    1    1    1    1    1    1    1     1     1     1     1
-#&gt;  [87,]    0    0    1    1    1    1    1    1    1     1     1     1     1
-#&gt;  [88,]    1    1    1    0    1   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [89,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [90,]    1    1    1    1    0    1    1    0    1     1     1     1     1
-#&gt;  [91,]    0    0    0   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [92,]    0    0    0    0    0    0    0    0   NA    NA    NA    NA    NA
-#&gt;  [93,]    1    0    1    1    0    0    1    1    1     1     1     1     1
-#&gt;  [94,]    0    0    0    0    0    0   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [95,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-#&gt;  [96,]    0    1    1    1    1    1    1    1    1     1     1     1     0
-#&gt;  [97,]    0    0    0   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
-#&gt;  [98,]    1    0    1    1    1    1    1    1    0     1     1     1    NA
-#&gt;  [99,]    1    1    1    1    1    1    1    0    1     1     1     1     1
-#&gt; [100,]    1    1    1    1    1    1    1    1    1     1     1     1    NA
+#&gt;  [69,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [70,]    0    0    1    0    1    1    1    1    1     1    NA    NA    NA
+#&gt;  [71,]    1    1    1    1    1    1    1    1    1     1     0     0    NA
+#&gt;  [72,]    1    0    1    1    1    1    1    1    1     1     0     1     1
+#&gt;  [73,]    1    1    1    1    1    1    0    1    1     1     1     0     1
+#&gt;  [74,]    0    0    1    1    1    1   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [75,]    1    1    1    0    1    0    1    1    1     0     1     1     1
+#&gt;  [76,]    0    0    0    1    1    1    1    1    1     1     1     1     0
+#&gt;  [77,]    1    1    1    1    1    1    0    0   NA    NA    NA    NA    NA
+#&gt;  [78,]    1    1    0    0    1    1    1    1    1     1     1    NA    NA
+#&gt;  [79,]    1    1    1    1    1    1    0    1    1     1     1     1     1
+#&gt;  [80,]    1    1    1    1    1    1   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [81,]    1    1    1    0    1    0    0    1    1     1     1     1     1
+#&gt;  [82,]    1    1    1    1    1    1    1    1    1     1    NA    NA    NA
+#&gt;  [83,]    1    1    1    1    1    1   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [84,]    0    1    1    1    0    1    1    1    1     1     1     1     1
+#&gt;  [85,]    1    1    0    1    1   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [86,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [87,]    1    1    1    0    1    0    0    1    0     1     1     0     1
+#&gt;  [88,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [89,]    1    1    0    1    1    1    1    1    0     0     0     1     1
+#&gt;  [90,]    1    1    1   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [91,]    1    1    1    1    0    1    0   NA   NA    NA    NA    NA    NA
+#&gt;  [92,]    1    0    1    0    1    1    1    1    1     0     1     1     0
+#&gt;  [93,]    1    1    1    1    1    1    1    0    1     1     0     1     1
+#&gt;  [94,]    1    0    1    1    1    1    1    1    1     1     1     1     1
+#&gt;  [95,]    0    1    1    1    1    1   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [96,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#&gt;  [97,]    1    1    1    1    1    1    1    1    1     1     1     0     0
+#&gt;  [98,]    0    0   NA   NA   NA   NA   NA   NA   NA    NA    NA    NA    NA
+#&gt;  [99,]    1    1    1    1    0    1    1    1    0     0     1    NA    NA
+#&gt; [100,]    1    1    1    1    0    1    1    1    1     0     1     1     1
 #&gt;        [,14] [,15] [,16] [,17] [,18] [,19] [,20]
-#&gt;   [1,]     0     0    NA    NA    NA    NA    NA
-#&gt;   [2,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;   [1,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;   [2,]     0     0     0     0     0     0    NA
 #&gt;   [3,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;   [4,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;   [5,]     0     0     0    NA    NA    NA    NA
-#&gt;   [6,]     0     0     0     0     0    NA    NA
-#&gt;   [7,]     0     0     0     0     0    NA    NA
-#&gt;   [8,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;   [5,]     1     0     1     1    NA    NA    NA
+#&gt;   [6,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;   [7,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;   [8,]     1     1     1    NA    NA    NA    NA
 #&gt;   [9,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;  [10,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [11,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [11,]     0     0     0    NA    NA    NA    NA
 #&gt;  [12,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;  [13,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [14,]     0     0     0     0    NA    NA    NA
-#&gt;  [15,]     0     1     1     0    NA    NA    NA
+#&gt;  [14,]     1     1     1     1     0     0    NA
+#&gt;  [15,]     1     0    NA    NA    NA    NA    NA
 #&gt;  [16,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [17,]     1     1     1     1     1     1     1
-#&gt;  [18,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [19,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [20,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [17,]     0    NA    NA    NA    NA    NA    NA
+#&gt;  [18,]     1     1     1     1    NA    NA    NA
+#&gt;  [19,]     1     1     1     1     0     1    NA
+#&gt;  [20,]     1     1     1     0     1     1     0
 #&gt;  [21,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [22,]     0     0     0    NA    NA    NA    NA
-#&gt;  [23,]     1     0    NA    NA    NA    NA    NA
-#&gt;  [24,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [25,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [22,]     1     1     1     1    NA    NA    NA
+#&gt;  [23,]     0     1     1    NA    NA    NA    NA
+#&gt;  [24,]     1    NA    NA    NA    NA    NA    NA
+#&gt;  [25,]     0     0    NA    NA    NA    NA    NA
 #&gt;  [26,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [27,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [28,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [27,]     1     1     1     1    NA    NA    NA
+#&gt;  [28,]     0     0     0     0     0     0     0
 #&gt;  [29,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [30,]     0     0     0     0    NA    NA    NA
-#&gt;  [31,]     1    NA    NA    NA    NA    NA    NA
+#&gt;  [30,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [31,]     0     0     0     0     0     0    NA
 #&gt;  [32,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [33,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [34,]     0     0     0    NA    NA    NA    NA
+#&gt;  [33,]     1    NA    NA    NA    NA    NA    NA
+#&gt;  [34,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;  [35,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [36,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [37,]     1     1    NA    NA    NA    NA    NA
-#&gt;  [38,]     0     0     0     0     0    NA    NA
-#&gt;  [39,]     0     0     0    NA    NA    NA    NA
-#&gt;  [40,]     1     1     1     1    NA    NA    NA
-#&gt;  [41,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [42,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [36,]     1     1     1     1     1     1    NA
+#&gt;  [37,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [38,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [39,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [40,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [41,]     1     1     1     1     1     1    NA
+#&gt;  [42,]     0     0     0     0     0    NA    NA
 #&gt;  [43,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;  [44,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [45,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [46,]     0     0     0    NA    NA    NA    NA
-#&gt;  [47,]     0     0     0     0    NA    NA    NA
+#&gt;  [45,]     1     1     1    NA    NA    NA    NA
+#&gt;  [46,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [47,]     0     0     0     0     0     0    NA
 #&gt;  [48,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;  [49,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [50,]     1     1    NA    NA    NA    NA    NA
-#&gt;  [51,]     0    NA    NA    NA    NA    NA    NA
+#&gt;  [50,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [51,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;  [52,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;  [53,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;  [54,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [55,]     1     1     1    NA    NA    NA    NA
-#&gt;  [56,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [57,]     0     0     0     0     0    NA    NA
-#&gt;  [58,]     0     1     1     0     1     1    NA
-#&gt;  [59,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [55,]     0     1     1     1     0     1     1
+#&gt;  [56,]     1     1     1     0     1    NA    NA
+#&gt;  [57,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [58,]     0     0     0     0     0     0    NA
+#&gt;  [59,]     1    NA    NA    NA    NA    NA    NA
 #&gt;  [60,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [61,]     0    NA    NA    NA    NA    NA    NA
-#&gt;  [62,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [63,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [61,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [62,]     0     0    NA    NA    NA    NA    NA
+#&gt;  [63,]     0     0     0    NA    NA    NA    NA
 #&gt;  [64,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [65,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [66,]     0     1    NA    NA    NA    NA    NA
-#&gt;  [67,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [65,]     1     1    NA    NA    NA    NA    NA
+#&gt;  [66,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [67,]     0     1    NA    NA    NA    NA    NA
 #&gt;  [68,]     0    NA    NA    NA    NA    NA    NA
-#&gt;  [69,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [69,]     0    NA    NA    NA    NA    NA    NA
 #&gt;  [70,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;  [71,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [72,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [73,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [72,]     1     1     0    NA    NA    NA    NA
+#&gt;  [73,]     1     0    NA    NA    NA    NA    NA
 #&gt;  [74,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [75,]     0    NA    NA    NA    NA    NA    NA
-#&gt;  [76,]     0    NA    NA    NA    NA    NA    NA
+#&gt;  [75,]     1     1     1     1    NA    NA    NA
+#&gt;  [76,]     1     0     1     1     1     1    NA
 #&gt;  [77,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [78,]     0     0    NA    NA    NA    NA    NA
-#&gt;  [79,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [78,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [79,]     0     1     1    NA    NA    NA    NA
 #&gt;  [80,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [81,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [82,]     1     1    NA    NA    NA    NA    NA
-#&gt;  [83,]     1     1     0    NA    NA    NA    NA
-#&gt;  [84,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [81,]     1    NA    NA    NA    NA    NA    NA
+#&gt;  [82,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [83,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [84,]     1     1     1     1    NA    NA    NA
 #&gt;  [85,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [86,]     1     1     1    NA    NA    NA    NA
+#&gt;  [86,]     0     0     0     0     0     0    NA
 #&gt;  [87,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [88,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [89,]     0     0    NA    NA    NA    NA    NA
+#&gt;  [88,]     0     0    NA    NA    NA    NA    NA
+#&gt;  [89,]     1     1    NA    NA    NA    NA    NA
 #&gt;  [90,]    NA    NA    NA    NA    NA    NA    NA
 #&gt;  [91,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [92,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [93,]     1     1     1     1     1     1     0
-#&gt;  [94,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [95,]     0     0     0     0     0     0    NA
-#&gt;  [96,]     1     1     1    NA    NA    NA    NA
-#&gt;  [97,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [92,]     1    NA    NA    NA    NA    NA    NA
+#&gt;  [93,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [94,]     0    NA    NA    NA    NA    NA    NA
+#&gt;  [95,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [96,]    NA    NA    NA    NA    NA    NA    NA
+#&gt;  [97,]     0     1     1    NA    NA    NA    NA
 #&gt;  [98,]    NA    NA    NA    NA    NA    NA    NA
-#&gt;  [99,]     1     0     1    NA    NA    NA    NA
-#&gt; [100,]    NA    NA    NA    NA    NA    NA    NA</div></pre>
+#&gt;  [99,]    NA    NA    NA    NA    NA    NA    NA
+#&gt; [100,]     0     1     0     1     1     1    NA</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
