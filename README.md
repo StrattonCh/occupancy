@@ -74,7 +74,7 @@ library(occupancy)
 
 <!-- In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN. -->
 
-\#\#Disclaimer
+## Disclaimer
 
 This software is in the public domain because it contains materials that
 originally came from the U.S. Geological Survey, an agency of the United

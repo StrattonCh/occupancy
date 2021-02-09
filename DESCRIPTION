@@ -24,6 +24,7 @@ Suggests:
 VignetteBuilder: knitr
 Imports: 
     stats,
+    rlang,
     magrittr,
     dplyr,
     tidyr,
