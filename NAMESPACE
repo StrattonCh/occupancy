@@ -3,6 +3,7 @@
 S3method(print,occ_mod)
 S3method(print,summary.occ_mod)
 S3method(summary,occ_mod)
+export(MSMocc_mod)
 export(occ_mod)
 export(sim_MSMocc)
 export(sim_occ)
